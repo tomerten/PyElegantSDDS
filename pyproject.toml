@@ -13,11 +13,12 @@ homepage = "https://github.com/tomerten/PyElegantSDDS"
 keywords = ['packaging', 'poetry']
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.10"
 numpy = "^1.20.2"
 pandas = "^1.2.4"
 dask = "^2021.4.1"
 termcolor = "^1.1.0"
+scipy = "^1.6.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.4.2"

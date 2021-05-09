@@ -17,3 +17,7 @@ API
 .. automodule:: pyelegantsdds.elegant_command
    :members:
 
+
+.. automodule:: pyelegantsdds.elegantrun
+   :members:
+
