@@ -13,3 +13,7 @@ API
 .. automodule:: pyelegantsdds.sdds
    :members:
 
+
+.. automodule:: pyelegantsdds.elegant_command
+   :members:
+

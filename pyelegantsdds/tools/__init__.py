@@ -9,7 +9,6 @@ A module
 """
 
 # your imports here ...
-from .sddsutils import sddsconvert2ascii
 
 
 def greet(to=""):
