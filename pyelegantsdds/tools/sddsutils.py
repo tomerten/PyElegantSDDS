@@ -209,6 +209,19 @@ def processvaryelementoutput(sif, basename_binary):
     coordinate table can be grouped per "step" and "particleID".
     This allows to study individual tracked particles for individual vary
     steps.
+
+    Parameters:
+    -----------
+    sif : str
+        Singularity executable container where sdds is installed.add()
+    basename_binary : str
+        name of the file to be processed
+
+    Returns:
+    --------
+    filename : str
+        Filename where the processed data is stored.
+
     """
     subprocess.run(
         f"{sif} sddsprocess -define=column,step,Step {basename_binary} processed_{basename_binary}",
@@ -224,16 +237,28 @@ def generate_scan_dataset(sif, datasetdict, filepath):
     to be used by elegant to scan over using vary_element method.
 
     Parameters:
+    -----------
     datadict: dict
         dictionary where the keys are the column headers and values are list of values to scan over
         Note: all dict values need to have the same length
 
     filepath: str
         path where the simulation will be run (i.e where ele and lte files are)
+
+    Returns:
+    --------
+    None
+        Creates file scan.sdds in the filepath to be used in the simulations.add()
+
     """
+    # get current working dir to be able to get back
     currdir = os.getcwd()
+
+    # change to simulation dir
     os.chdir(filepath)
-    print(filepath)
+    print("File path used: {}".format(filepath))
+
+    # create scan.sdds
     cmd = f"{sif}  sddsmakedataset scan.sdds "
 
     for k, v in datasetdict.items():
@@ -241,6 +266,7 @@ def generate_scan_dataset(sif, datasetdict, filepath):
 
     subprocess.run(cmd, check=True, shell=True)
 
+    # change back to original working dir
     os.chdir(currdir)
 
 
@@ -256,6 +282,18 @@ def sddsplot(
     split="page",
     scale="0,0,0,0",
 ):
+    """
+    Method to generate sdds plot.
+
+    Parameters:
+    -----------
+    sif:
+    filepath
+    columnNames
+    markerstyle
+    vary
+    scalemarker
+    """
     if fill:
         strfill = ",fill"
     else:
