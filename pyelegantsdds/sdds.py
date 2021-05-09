@@ -493,6 +493,33 @@ class SDDS:
 
 		return self.parameterlist
 
+    def getParameterValues(self):
+        """Get parameter values from sdds file. 
+
+        Returns
+        -------
+        dataframe
+            frame containing the parameter values
+        """
+        cmdstr = "{} sddsprintout -parameters=* -spreadsheet {}".format(self.sif, self.filename)
+        p = subp.Popen(cmdstr, stdout=subp.PIPE, shell=True)
+        (output, err) = p.communicate()
+        p_status = p.wait()
+        df = pd.read_csv(
+            StringIO(output.decode("utf-8")),
+            error_bad_lines=False,
+            delim_whitespace=True,
+            skip_blank_lines=True,
+            skiprows=1,
+            names=["ParameterName", "ParameterValue"],
+            index_col=False,
+        )
+
+        df = df.set_index("ParameterName", drop=True)
+        df = pd.to_numeric(df.drop(["SVNVersion", "Stage"])["ParameterValue"])
+        self.ParameterName = df
+        return df
+
 	def readParticleData(self, vary=False):
 		"""Read the particle tracking data.
 
