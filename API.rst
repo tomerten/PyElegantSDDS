@@ -10,3 +10,6 @@ API
 
 .. automodule:: pyelegantsdds.tools.sddsutils
    :members:
+.. automodule:: pyelegantsdds.sdds
+   :members:
+
