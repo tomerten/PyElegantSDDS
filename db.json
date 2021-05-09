@@ -1,0 +1,37 @@
+{
+  "tools": {
+    "options": {
+      "verbosity": 1,
+      "project_path": "/home/mti/github-tomerten/PyElegantSDDS",
+      "default_project_path": true,
+      "clear_log": false,
+      "template_parameters": {
+        "project_name": "PyElegantSDDS",
+        "package_name": "pyelegantsdds",
+        "full_name": "Tom Mertens",
+        "email": "your.email@whatev.er",
+        "github_username": "tomerten",
+        "version": "0.0.0",
+        "github_repo": "{{ cookiecutter.project_name }}",
+        "default_branch": "master",
+        "python_version": "3.7",
+        "sphinx_html_theme": "sphinx_rtd_theme",
+        "open_source_license": "MIT license",
+        "py": "py",
+        "project_short_description": "<Enter a one-sentence description of this project here.>",
+        "module_name": "tools"
+      },
+      "add_name": "tools",
+      "app": false,
+      "group": false,
+      "py": true,
+      "package": true,
+      "f90": false,
+      "cpp": false,
+      "templates": "module-py",
+      "overwrite": false,
+      "backup": false
+    },
+    "API.rst": "\n.. automodule:: pyelegantsdds.tools\n   :members:\n\n"
+  }
+}
