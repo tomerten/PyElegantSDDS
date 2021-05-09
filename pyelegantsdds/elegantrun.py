@@ -155,8 +155,8 @@ def generate_sphere_grid(dim=2, rmin=1e-6, rmax=1, rsteps=3, phisteps=3, **kwarg
 	if kwargs.get('half',False):
 		mangle = mangle / 2.0
 
-    PHI1 = np.linspace(0, magnle,phisteps)
-    PHI2 = np.linspace(0, mangle,phisteps) # full sphere is 2 pi reduced for tracking to upper half
+    PHI1 = np.linspace(0, mangle ,phisteps)
+    PHI2 = np.linspace(0, mangle ,phisteps) # full sphere is 2 pi reduced for tracking to upper half
     
 	# the special case
 	if dim != 6:
