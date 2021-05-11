@@ -76,8 +76,8 @@ class ElegantCommandFile:
     def __init__(self, filename):
         self.commandlist = []
         self.filename = filename
-		self.history = {}
-		self._count_iter = (count(start=0, stpe=1))
+        self.history = {}
+        self._count_iter = count(start=0, step=1)
 
     def checkCommand(self, typename):
         """
@@ -87,7 +87,7 @@ class ElegantCommandFile:
         Parameters:
         ----------
         typename    : str
-            command type
+                command type
 
         """
         for tn in self._COMMANDLIST:
@@ -104,9 +104,9 @@ class ElegantCommandFile:
         Parameters:
         ----------
         command     : str
-            valid Elegant command
+                valid Elegant command
         note        : str
-			extra info
+                extra info
         """
         # check if it is a valid Elegant command
         if self.checkCommand(command) == False:
@@ -137,11 +137,11 @@ class ElegantCommandFile:
         Parameters:
         ----------
         commandname     : str
-            name of the command to modify
+                name of the command to modify
         mode            : str | int, default last
-            if multiple commands select which one to change
+                if multiple commands select which one to change
         params          : dict
-            command parameters - updated
+                command parameters - updated
 
         """
         # create command index list to be able
@@ -192,9 +192,9 @@ class ElegantCommandFile:
         Parameters:
         ----------
         commandname     : str
-            name of the command to modify
+                name of the command to modify
         mode            : str | int , default last
-            if multiple commands select which one to change
+                if multiple commands select which one to change
 
         """
         # create index list for the command to be repeated
@@ -222,52 +222,51 @@ class ElegantCommandFile:
             else:
                 print("The mode is invalid")
 
-	def clearHistory(self):
+    def clearHistory(self):
         """
         Clear command history.
         """
         self.history = {}
-		self._count_iter = (count(start=0,step=1))
+        self._count_iter = count(start=0, step=1)
 
     def _addHistory(self, cmdlist):
         """
         Add commands to history.
 
-		Parameters:
-		-----------
-		list | str : cmdlist
-			command or list of commands to add to history.
+        Parameters:
+        -----------
+        list | str : cmdlist
+                command or list of commands to add to history.
         """
         _key = next(self._count_iter)
-		if not isinstance(cmdlist, list):
-			cmdlist= [cmdlist]	
+        if not isinstance(cmdlist, list):
+            cmdlist = [cmdlist]
         _value = cmdlist
-        self.command_history[_key] = _value
+        self.history[_key] = _value
 
     def clear(self):
-		"""Clear command list.
-		"""
-		# check if commadnlist empty if not add to history
-		if len(self.commandlist) > 0:
-			self._addHistory(self.commandlist)
+        """Clear command list."""
+        # check if commadnlist empty if not add to history
+        if len(self.commandlist) > 0:
+            self._addHistory(self.commandlist)
 
-		# clear commandlist
+        # clear commandlist
         self.commandlist = []
 
-    def optimize(self,lattice):
-		# TODO
+    def optimize(self, lattice):
+        # TODO
         pass
 
     def write(self, outputfilename="", mode="w"):
         """
         Method to write the command file to external file.
 
-		Parameters:
-		-----------
-		outputfilename: str
-			filename to write to
-		mode : str
-			python file write mode
+        Parameters:
+        -----------
+        outputfilename: str
+                filename to write to
+        mode : str
+                python file write mode
         """
         if outputfilename != "":
             self.filename = outputfilename

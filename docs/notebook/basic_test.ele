@@ -1,0 +1,13 @@
+&run_setup
+	lattice             = FODO.lte,
+	use_beamline        = FODO,
+	p_central_mev       = 1700.0,
+	centroid            = %s.cen,
+	default_order       = 3,
+	concat_order        = 3,
+	rootname            = temp,
+	parameters          = %s.params,
+	semaphore_file      = %s.done,
+	magnets             = %s.mag,
+&end
+

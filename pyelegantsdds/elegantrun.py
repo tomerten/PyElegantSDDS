@@ -21,11 +21,12 @@ from scipy import constants as const
 from .elegant_command import ElegantCommandFile
 from .sdds import SDDS, SDDSCommand
 
-# ============================================================================== 
+# ==============================================================================
 #
 # HELPER FUNCTIONS
 #
-# ============================================================================== 
+# ==============================================================================
+
 
 def write_parallel_elegant_script():
     """
@@ -66,7 +67,7 @@ def write_parallel_run_script(sif):
     Parameters:
     -----------
     sif: str
-            path to singularity container
+                                                                                                                                                                                                                                                                    path to singularity container
 
     """
     bashstrlist = [
@@ -82,6 +83,7 @@ def write_parallel_run_script(sif):
     with open("run_pelegant.sh", "w") as f:
         f.write(bashstr)
 
+
 def GenerateNDimCoordinateGrid(N, NPOINTS, pmin=1e-6, pmax=1e-4, man_ranges=None):
     """
     Method to generate an N dimensional coordinate grid for tracking,
@@ -89,27 +91,27 @@ def GenerateNDimCoordinateGrid(N, NPOINTS, pmin=1e-6, pmax=1e-4, man_ranges=None
     The final shape is printed at creation.
 
     IMPORTANT:
-        Number of grid points scales with N * NPOINTS**N, i.e.
-        very large arrays are generated already with
-        quite some small numbers for NPOINTS and N.
+                                                                                                                                    Number of grid points scales with N * NPOINTS**N, i.e.
+                                                                                                                                    very large arrays are generated already with
+                                                                                                                                    quite some small numbers for NPOINTS and N.
 
-        Example: NPOINTS = 2, N = 6 -> 6*2*6 = 384 elements
+                                                                                                                                    Example: NPOINTS = 2, N = 6 -> 6*2*6 = 384 elements
 
     Parameters:
     -----------
     N: int
-        dimension of the coordinate grid
+                                                                                                                                    dimension of the coordinate grid
     NPOINTS: int
-        number of points in each dimension
+                                                                                                                                    number of points in each dimension
     pmin: float
-        min coordinate value in each dim
+                                                                                                                                    min coordinate value in each dim
     pmax: float
-        max coordinate value in each dim
+                                                                                                                                    max coordinate value in each dim
 
-	Returns:
-	========
-	coordinate_grid : numpy array
-		coordinate grid with particle ID in last column
+    Returns:
+    ========
+    coordinate_grid : numpy array
+                                                                                                                                    coordinate grid with particle ID in last column
     """
     rangelist = [np.linspace(pmin, pmax, NPOINTS)] * N
     if man_ranges is not None:
@@ -127,83 +129,92 @@ def GenerateNDimCoordinateGrid(N, NPOINTS, pmin=1e-6, pmax=1e-4, man_ranges=None
     # print(coordinate_grid)
 
     return coordinate_grid
-	
-	
+
+
 def generate_sphere_grid(dim=2, rmin=1e-6, rmax=1, rsteps=3, phisteps=3, **kwargs):
-	"""Method to generate grid point within n-dim ball, like polar but n-dim. 
-	Dimension 6 is a special case - as we need it for Elegant tracking. In this case
-	the final two dimensions are not polar but fixed for dim 5 and in dim 6 and array 
-	passed via the kwargs 'deltaGamma'.
+    """Method to generate grid point within n-dim ball, like polar but n-dim.
+    Dimension 6 is a special case - as we need it for Elegant tracking. In this case
+    the final two dimensions are not polar but fixed for dim 5 and in dim 6 and array
+    passed via the kwargs 'deltaGamma'.
 
-	Parameters
-	----------
-	dim : int, optional
-		dimension of the ball, by default 2
-	rmin : float, optional
-		minimal radius to use, by default 1e-6
-	rmax : float, optional
-		maximal radius to use, by default 1
-	rsteps : int, optional
-		number of steps in radius grid, by default 3
-	phisteps : int, optional
-		number of steps in the angle grid, by default 3
-	"""
-    R = np.linspace(rmin,rmax,rsteps)
-	mangle = np.pi 
+    Parameters
+    ----------
+    dim : int, optional
+                                                                                                                                    dimension of the ball, by default 2
+    rmin : float, optional
+                                                                                                                                    minimal radius to use, by default 1e-6
+    rmax : float, optional
+                                                                                                                                    maximal radius to use, by default 1
+    rsteps : int, optional
+                                                                                                                                    number of steps in radius grid, by default 3
+    phisteps : int, optional
+                                                                                                                                    number of steps in the angle grid, by default 3
+    """
+    R = np.linspace(rmin, rmax, rsteps)
+    mangle = np.pi
 
-	# only track one kwadrant
-	if kwargs.get('half',False):
-		mangle = mangle / 2.0
+    # only track one kwadrant
+    if kwargs.get("half", False):
+        mangle = mangle / 2.0
 
-    PHI1 = np.linspace(0, mangle ,phisteps)
-    PHI2 = np.linspace(0, mangle ,phisteps) # full sphere is 2 pi reduced for tracking to upper half
-    
-	# the special case
-	if dim != 6:
-    	matrices = (R,) + tuple((PHI1 for _ in range(dim-2))) + (PHI2,)
-	else:
-		# elegant t shift is fixed to zero
-		# TODO: fix the fixed t shift
-		matrices = (R,) + tuple((PHI1 for _ in range(dim-4))) + (PHI2,) + (np.array([0.0]), kwargs.get('deltaGamma',np.array([0.0])))
-    
-	# create meshgrid to make all combinations
+    PHI1 = np.linspace(0, mangle, phisteps)
+    PHI2 = np.linspace(
+        0, mangle, phisteps
+    )  # full sphere is 2 pi reduced for tracking to upper half
+
+    # the special case
+    if dim != 6:
+        matrices = (R,) + tuple((PHI1 for _ in range(dim - 2))) + (PHI2,)
+    else:
+        # elegant t shift is fixed to zero
+        # TODO: fix the fixed t shift
+        matrices = (
+            (R,)
+            + tuple((PHI1 for _ in range(dim - 4)))
+            + (PHI2,)
+            + (np.array([0.0]), kwargs.get("deltaGamma", np.array([0.0])))
+        )
+
+    # create meshgrid to make all combinations
     meshmatrices = np.array(np.meshgrid(*matrices))
-    
-	# count the number of particles
+
+    # count the number of particles
     npart = meshmatrices.size // dim
-    
-	# reshape
+
+    # reshape
     coord_T = meshmatrices.reshape(dim, npart).T
-    
-#     X = (coord_T[:,0] * np.cos(coord_T[:,1]),)
+
+    #     X = (coord_T[:,0] * np.cos(coord_T[:,1]),)
     X = tuple()
 
-	 if dim == 6:
+    if dim == 6:
         ndim = 4
     else:
         ndim = dim
 
-    for i in range(1,ndim):
-        X += (coord_T[:,0] * np.prod(np.sin(coord_T[:,1:i]), axis=1) * np.cos(coord_T[:,i]),)
-        
-    X += (coord_T[:,0] * np.prod(np.sin(coord_T[:,1:-1]), axis=1) * np.sin(coord_T[:,-1]),)
-    
-    if dim!=6:
+    for i in range(1, ndim):
+        X += (coord_T[:, 0] * np.prod(np.sin(coord_T[:, 1:i]), axis=1) * np.cos(coord_T[:, i]),)
+
+    X += (coord_T[:, 0] * np.prod(np.sin(coord_T[:, 1:-1]), axis=1) * np.sin(coord_T[:, -1]),)
+
+    if dim != 6:
         sphere_grid = np.vstack(X)
     else:
-        sphere_grid = np.vstack(X + (coord_T[:,4],coord_T[:,5]))
+        sphere_grid = np.vstack(X + (coord_T[:, 4], coord_T[:, 5]))
     print("Shape: {} - Number of paritcles: {} ".format(sphere_grid.T.shape, npart))
-    
+
     # add particle id
     coordinate_grid = np.hstack((sphere_grid.T, np.array(range(1, npart + 1)).reshape(npart, 1)))
     # print(coordinate_grid)
     return coordinate_grid
 
-# ============================================================================== 
+
+# ==============================================================================
 #
 # MAIN CLASS
 #
-# ============================================================================== 
+# ==============================================================================
+
 
 class ElegantRun:
     """
@@ -247,6 +258,19 @@ class ElegantRun:
         write_parallel_run_script(self.sif)
         self.pelegant = "run_pelegant.sh"
 
+    def clearCommands(self):
+        """Clear the command list."""
+        self.commandfile.clear()
+
+    def clearCommandHistory(self):
+        """Clear the command history."""
+        self.commandfile.clearHistory()
+
+    def clearAll(self):
+        """Clears both command list and command history."""
+        self.clearCommands()
+        self.clearCommandHistory()
+
     def run(self):
         """
         Run the commandfile.
@@ -279,7 +303,7 @@ class ElegantRun:
             use_beamline=self.kwargs.get("use_beamline", None),
             p_central_mev=self.kwargs.get("energy", 1700.00),
             centroid="%s.cen",
-            default_order=kwargs.get("default_order", 3),
+            default_order=kwargs.get("default_order", 1),
             concat_order=kwargs.get("concat_order", 3),
             rootname="temp",
             parameters="%s.params",
@@ -309,7 +333,7 @@ class ElegantRun:
             index_limit=kwargs.get("index_limit", 1),
         )
 
-    def add_very_element_from_file(self, **kwargs):
+    def add_vary_element_from_file(self, **kwargs):
         """
         Add single vary element line, loading value from
         dataset file.
@@ -328,16 +352,14 @@ class ElegantRun:
             )
 
     def add_basic_controls(self):
-		"""Adding basic controls for tracking
-		"""
+        """Adding basic controls for tracking"""
         # add controls
         self.commandfile.addCommand("run_control")
         self.commandfile.addCommand("bunched_beam")
         self.commandfile.addCommand("track")
 
     def add_watch(self, **kwargs):
-		"""Add watch point. 
-		"""
+        """Add watch point."""
         self.commandfile.addCommand(
             "insert_elements",
             name=kwargs.get("name", ""),
@@ -355,8 +377,7 @@ class ElegantRun:
         )
 
     def add_watch_at_start(self):
-		"""Add watch point at start of lattice. 
-		"""
+        """Add watch point at start of lattice."""
         self.add_watch(
             name="W",
             add_at_start=1,
@@ -421,7 +442,7 @@ class ElegantRun:
         Parameters:
         ----------
         kwargs  : dict
-            twiss command options
+                                                                                                                                        twiss command options
         """
         # TODO: add matched = 0 case
         matched = kwargs.get("matched", 1)
@@ -473,22 +494,22 @@ class ElegantRun:
         Parameters:
         -----------
         kwargs  :
-            - SDDS_output_order : order of maps (max is 3)
+                                                                                                                                        - SDDS_output_order : order of maps (max is 3)
 
         Returns:
         --------
         C       : np.array
-            constant vector
+                                                                                                                                        constant vector
         R       : np.array
-            R matrix
+                                                                                                                                        R matrix
         T_dict  : dict
-            T map Tijk as key
+                                                                                                                                        T map Tijk as key
         Q_dict  : dict
-            U map Qijkl as key
+                                                                                                                                        U map Qijkl as key
         """
-		assert kwargs.get("SDDS_output_order",1) < 4
+        assert kwargs.get("SDDS_output_order", 1) < 4
 
-		self.commandfile.clear()
+        self.commandfile.clear()
         self.add_basic_setup()
         self.commandfile.addCommand(
             "matrix_output",
@@ -549,7 +570,7 @@ class ElegantRun:
 
         return C, R, ElementMatrices, T_dict, Q_dict
 
-    def generate_sdds_particle_inputfile(self, grid_type='rectangular', **kwargs):
+    def generate_sdds_particle_inputfile(self, grid_type="rectangular", **kwargs):
         """
         Generates an SDDS file containing initial
         particle coordinates on a grid. The grid
@@ -558,71 +579,80 @@ class ElegantRun:
         Parameters:
         ----------
         kwargs      :
-            - pmin: min value of grid on each dim
-            - pmax: max value of grid on each dim
-            - pcentralmev: particle energy (code converts it to beta * gamma )
-            - man_ranges: dict containing as key dim num - in order x xp y yp s p
-                          and as values an array of values to be used
-                          For p this is autoset to beta gamma based on pcentralmev
-            - NPOINTS: number of linear spaced points in each dim for the grid
+                                        - pmin: min value of grid on each dim
+                                        - pmax: max value of grid on each dim
+                                        - pcentralmev: particle energy (code converts it to beta * gamma )
+                                        - man_ranges: dict containing as key dim num - in order x xp y yp s p
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        and as values an array of values to be used
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        For p this is autoset to beta gamma based on pcentralmev
+                                        - NPOINTS: number of linear spaced points in each dim for the grid
 
         Returns:
         --------
         None, writes the data to pre-defined named file.
 
         """
-		assert grid_type in ['rectangular', 'spherical']
-		pcentral = kwargs.get("pcentralmev", 1700.00)
-		# convert to beta * gamma
-		pcentral = np.sqrt(
-			(pcentral / const.physical_constants["electron mass energy equivalent in MeV"][0]) ** 2
-			- 1
-		)
+        assert grid_type in ["rectangular", "spherical"]
+        pcentral = kwargs.get("pcentralmev", self.kwargs.get("energy"))
+        # convert to beta * gamma
+        pcentral = np.sqrt(
+            (pcentral / const.physical_constants["electron mass energy equivalent in MeV"][0]) ** 2
+            - 1
+        )
 
-		if grid_type == 'rectangular':
-			npoints_per_dim = kwargs.get("NPOINTS", 2)
-			pmin = kwargs.get("pmin", 0)
-			pmax = kwargs.get("pmax", 1e-4)
-			man_ranges = kwargs.get("man_ranges", {"5": np.array([pcentral])})
-			if "5" not in man_ranges.keys() and 5 not in man_ranges.keys():
-				man_ranges["5"] = np.array([pcentral])
-			# example : man_ranges={'0':np.array([1e-6,1e-5]),'1':[0]})
+        if grid_type == "rectangular":
+            npoints_per_dim = kwargs.get("NPOINTS", 2)
+            pmin = kwargs.get("pmin", 0)
+            pmax = kwargs.get("pmax", 1e-4)
+            man_ranges = kwargs.get("man_ranges", {"5": np.array([pcentral])})
+            if "5" not in man_ranges.keys() and 5 not in man_ranges.keys():
+                man_ranges["5"] = np.array([pcentral])
+            # example : man_ranges={'0':np.array([1e-6,1e-5]),'1':[0]})
 
-			# generate coordinate grid, with particle id as last column
-			# and save it as plain data table seperated by a whitespace
-			particle_df = pd.DataFrame(
-				GenerateNDimCoordinateGrid(
-					6, npoints_per_dim, pmin=pmin, pmax=pmax, man_ranges=man_ranges
-				)
-			)
-			particle_df.to_csv("temp_plain_particles.dat", sep=" ", header=None, index=False)
+            # generate coordinate grid, with particle id as last column
+            # and save it as plain data table seperated by a whitespace
+            particle_df = pd.DataFrame(
+                GenerateNDimCoordinateGrid(
+                    6, npoints_per_dim, pmin=pmin, pmax=pmax, man_ranges=man_ranges
+                )
+            )
+            particle_df.to_csv("temp_plain_particles.dat", sep=" ", header=None, index=False)
 
-			# cleanup kwargs
-			kwargs.pop("NPOINTS", None)
-			kwargs.pop("pmin", None)
-			kwargs.pop("pmax", None)
-			kwargs.pop("man_ranges", None)
-		else:
-			rmin = kwargs.get('rmin', 1e-6)
-			rmax = kwargs.get('rmax', 1e-1)
-			rsteps = kwargs.get('rsteps', 3)
-			half  = kwargs.get('half', True)
-			phisteps = kwargs.get('phisteps',5)
-			deltaGamma = kwargs.get('deltaGamma', np.array([pcentral]))
+            # cleanup kwargs
+            kwargs.pop("NPOINTS", None)
+            kwargs.pop("pmin", None)
+            kwargs.pop("pmax", None)
+            kwargs.pop("man_ranges", None)
+        else:
+            rmin = kwargs.get("rmin", 1e-6)
+            rmax = kwargs.get("rmax", 1e-1)
+            rsteps = kwargs.get("rsteps", 3)
+            half = kwargs.get("half", True)
+            phisteps = kwargs.get("phisteps", 5)
+            deltaGamma = kwargs.get("deltaGamma", np.array([pcentral]))
 
-			particle_df = pd.DataFrame(
-				generate_sphere_grid(dim=6,rmin=rmin,rmax=rmax, rsteps=rsteps, phisteps=phisteps, deltaGamma=deltaGamma)
-			)
+            particle_df = pd.DataFrame(
+                generate_sphere_grid(
+                    dim=6,
+                    rmin=rmin,
+                    rmax=rmax,
+                    rsteps=rsteps,
+                    phisteps=phisteps,
+                    deltaGamma=deltaGamma,
+                    half=half,
+                )
+            )
 
-			# clean up kwargs
-			kwargs.pop('rmin', None)
-			kwargs.pop('rmax', None)
-			kwargs.pop('rsteps', None)
-			kwargs.pop('half', None)
-			kwargs.pop('phisteps', None)
-			kwargs.pop('deltaGamma', None)
+            particle_df.to_csv("temp_plain_particles.dat", sep=" ", header=None, index=False)
+            # clean up kwargs
+            kwargs.pop("rmin", None)
+            kwargs.pop("rmax", None)
+            kwargs.pop("rsteps", None)
+            kwargs.pop("half", None)
+            kwargs.pop("phisteps", None)
+            kwargs.pop("deltaGamma", None)
 
-		kwargs.pop("pcentralmev", None)
+        kwargs.pop("pcentralmev", None)
 
         # Create sddscommand object
         sddscommand = SDDSCommand(self.sif)
@@ -681,7 +711,7 @@ class ElegantRun:
         Create a vary table to use with elegant tracking,
         generated from manual input values.
         """
-		# TODO: add manual vary table generation
+        # TODO: add manual vary table generation
         pass
 
     def track_simple(self, **kwargs):
@@ -706,9 +736,9 @@ class ElegantRun:
     def track_vary(self):
         """
         Track a set of particles in combination with a
-        very command.
+        vary command.
         """
-		# TODO: add method to track with vary
+        # TODO: add method to track with vary
         pass
 
     def fma(self, **kwargs):
@@ -728,7 +758,20 @@ class ElegantRun:
         Run Elegant's Dynamic Aperture.
         """
         self.commandfile.clear()
-        self.add_basic_setup()
+        self.commandfile.addCommand(
+            "run_setup",
+            lattice=self.lattice,
+            use_beamline=self.kwargs.get("use_beamline", None),
+            p_central_mev=self.kwargs.get("energy", 1700.00),
+            centroid="%s.cen",
+            default_order=kwargs.get("default_order", 2),
+            concat_order=kwargs.get("concat_order", 3),
+            rootname="temp",
+            parameters="%s.params",
+            semaphore_file="%s.done",
+            magnets="%s.mag",  # for plotting profile
+            losses="%s.los",
+        )
 
         self.commandfile.addCommand("twiss_output", filename="%s.twi", output_at_each_step=1)
         self.commandfile.addCommand("run_control", n_passes=kwargs.pop("n_passes", 2 ** 9))

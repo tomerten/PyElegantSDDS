@@ -11,6 +11,7 @@ Welcome to PyElegantSDDS's documentation!
    api
    authors
    history
+   notebook/Tutorial_ElegantRun.ipynb
 
 ##################
 Indices and tables

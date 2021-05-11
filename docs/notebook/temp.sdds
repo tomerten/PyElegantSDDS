@@ -1,0 +1,520 @@
+SDDS1
+!# little-endian
+&description text="matrix--input: temp.ele  lattice: FODO.lte", contents=matrix, &end
+&parameter name=Step, description="Simulation step", type=long, &end
+&column name=s, units=m, description=Distance, type=double,  &end
+&column name=ElementName, description="Element name", format_string=%10s, type=string,  &end
+&column name=ElementOccurence, description="Occurence of element", format_string=%6ld, type=long,  &end
+&column name=ElementType, description="Element-type name", format_string=%10s, type=string,  &end
+&column name=C1, symbol="C$b1$n", units=m, type=double,  &end
+&column name=C2, symbol="C$b2$n", units=rad, type=double,  &end
+&column name=C3, symbol="C$b3$n", units=m, type=double,  &end
+&column name=C4, symbol="C$b4$n", units=rad, type=double,  &end
+&column name=C5, symbol="C$b5$n", units=m, type=double,  &end
+&column name=C6, symbol="C$b6$n", units=1, type=double,  &end
+&column name=R11, symbol="R$b11$n", type=double,  &end
+&column name=R12, symbol="R$b12$n", units=m/rad, type=double,  &end
+&column name=R13, symbol="R$b13$n", units=m/m, type=double,  &end
+&column name=R14, symbol="R$b14$n", units=m/rad, type=double,  &end
+&column name=R15, symbol="R$b15$n", units=m/m, type=double,  &end
+&column name=R16, symbol="R$b16$n", units=m/1, type=double,  &end
+&column name=R21, symbol="R$b21$n", units=rad/m, type=double,  &end
+&column name=R22, symbol="R$b22$n", type=double,  &end
+&column name=R23, symbol="R$b23$n", units=rad/m, type=double,  &end
+&column name=R24, symbol="R$b24$n", units=rad/rad, type=double,  &end
+&column name=R25, symbol="R$b25$n", units=rad/m, type=double,  &end
+&column name=R26, symbol="R$b26$n", units=rad/1, type=double,  &end
+&column name=R31, symbol="R$b31$n", units=m/m, type=double,  &end
+&column name=R32, symbol="R$b32$n", units=m/rad, type=double,  &end
+&column name=R33, symbol="R$b33$n", type=double,  &end
+&column name=R34, symbol="R$b34$n", units=m/rad, type=double,  &end
+&column name=R35, symbol="R$b35$n", units=m/m, type=double,  &end
+&column name=R36, symbol="R$b36$n", units=m/1, type=double,  &end
+&column name=R41, symbol="R$b41$n", units=rad/m, type=double,  &end
+&column name=R42, symbol="R$b42$n", units=rad/rad, type=double,  &end
+&column name=R43, symbol="R$b43$n", units=rad/m, type=double,  &end
+&column name=R44, symbol="R$b44$n", type=double,  &end
+&column name=R45, symbol="R$b45$n", units=rad/m, type=double,  &end
+&column name=R46, symbol="R$b46$n", units=rad/1, type=double,  &end
+&column name=R51, symbol="R$b51$n", units=m/m, type=double,  &end
+&column name=R52, symbol="R$b52$n", units=m/rad, type=double,  &end
+&column name=R53, symbol="R$b53$n", units=m/m, type=double,  &end
+&column name=R54, symbol="R$b54$n", units=m/rad, type=double,  &end
+&column name=R55, symbol="R$b55$n", type=double,  &end
+&column name=R56, symbol="R$b56$n", units=m/1, type=double,  &end
+&column name=R61, symbol="R$b61$n", units=1/m, type=double,  &end
+&column name=R62, symbol="R$b62$n", units=1/rad, type=double,  &end
+&column name=R63, symbol="R$b63$n", units=1/m, type=double,  &end
+&column name=R64, symbol="R$b64$n", units=1/rad, type=double,  &end
+&column name=R65, symbol="R$b65$n", units=1/m, type=double,  &end
+&column name=R66, symbol="R$b66$n", type=double,  &end
+&column name=T111, symbol="T$b111$n", units=1/m, type=double,  &end
+&column name=T121, symbol="T$b121$n", units=1/rad, type=double,  &end
+&column name=T122, symbol="T$b122$n", units="m/rad$a2$n", type=double,  &end
+&column name=T131, symbol="T$b131$n", units=1/m, type=double,  &end
+&column name=T132, symbol="T$b132$n", units=1/rad, type=double,  &end
+&column name=T133, symbol="T$b133$n", units=1/m, type=double,  &end
+&column name=T141, symbol="T$b141$n", units=1/rad, type=double,  &end
+&column name=T142, symbol="T$b142$n", units="m/rad$a2$n", type=double,  &end
+&column name=T143, symbol="T$b143$n", units=1/rad, type=double,  &end
+&column name=T144, symbol="T$b144$n", units="m/rad$a2$n", type=double,  &end
+&column name=T151, symbol="T$b151$n", units=1/m, type=double,  &end
+&column name=T152, symbol="T$b152$n", units=1/rad, type=double,  &end
+&column name=T153, symbol="T$b153$n", units=1/m, type=double,  &end
+&column name=T154, symbol="T$b154$n", units=1/rad, type=double,  &end
+&column name=T155, symbol="T$b155$n", units=1/m, type=double,  &end
+&column name=T161, symbol="T$b161$n", type=double,  &end
+&column name=T162, symbol="T$b162$n", units=m/rad, type=double,  &end
+&column name=T163, symbol="T$b163$n", type=double,  &end
+&column name=T164, symbol="T$b164$n", units=m/rad, type=double,  &end
+&column name=T165, symbol="T$b165$n", type=double,  &end
+&column name=T166, symbol="T$b166$n", units=m, type=double,  &end
+&column name=T211, symbol="T$b211$n", units="rad/m$a2$n", type=double,  &end
+&column name=T221, symbol="T$b221$n", units=1/m, type=double,  &end
+&column name=T222, symbol="T$b222$n", units=1/rad, type=double,  &end
+&column name=T231, symbol="T$b231$n", units="rad/m$a2$n", type=double,  &end
+&column name=T232, symbol="T$b232$n", units=1/m, type=double,  &end
+&column name=T233, symbol="T$b233$n", units="rad/m$a2$n", type=double,  &end
+&column name=T241, symbol="T$b241$n", units=1/m, type=double,  &end
+&column name=T242, symbol="T$b242$n", units=1/rad, type=double,  &end
+&column name=T243, symbol="T$b243$n", units=1/m, type=double,  &end
+&column name=T244, symbol="T$b244$n", units=1/rad, type=double,  &end
+&column name=T251, symbol="T$b251$n", units="rad/m$a2$n", type=double,  &end
+&column name=T252, symbol="T$b252$n", units=1/m, type=double,  &end
+&column name=T253, symbol="T$b253$n", units="rad/m$a2$n", type=double,  &end
+&column name=T254, symbol="T$b254$n", units=1/m, type=double,  &end
+&column name=T255, symbol="T$b255$n", units="rad/m$a2$n", type=double,  &end
+&column name=T261, symbol="T$b261$n", units=rad/m, type=double,  &end
+&column name=T262, symbol="T$b262$n", type=double,  &end
+&column name=T263, symbol="T$b263$n", units=rad/m, type=double,  &end
+&column name=T264, symbol="T$b264$n", type=double,  &end
+&column name=T265, symbol="T$b265$n", units=rad/m, type=double,  &end
+&column name=T266, symbol="T$b266$n", units=rad, type=double,  &end
+&column name=T311, symbol="T$b311$n", units=1/m, type=double,  &end
+&column name=T321, symbol="T$b321$n", units=1/rad, type=double,  &end
+&column name=T322, symbol="T$b322$n", units="m/rad$a2$n", type=double,  &end
+&column name=T331, symbol="T$b331$n", units=1/m, type=double,  &end
+&column name=T332, symbol="T$b332$n", units=1/rad, type=double,  &end
+&column name=T333, symbol="T$b333$n", units=1/m, type=double,  &end
+&column name=T341, symbol="T$b341$n", units=1/rad, type=double,  &end
+&column name=T342, symbol="T$b342$n", units="m/rad$a2$n", type=double,  &end
+&column name=T343, symbol="T$b343$n", units=1/rad, type=double,  &end
+&column name=T344, symbol="T$b344$n", units="m/rad$a2$n", type=double,  &end
+&column name=T351, symbol="T$b351$n", units=1/m, type=double,  &end
+&column name=T352, symbol="T$b352$n", units=1/rad, type=double,  &end
+&column name=T353, symbol="T$b353$n", units=1/m, type=double,  &end
+&column name=T354, symbol="T$b354$n", units=1/rad, type=double,  &end
+&column name=T355, symbol="T$b355$n", units=1/m, type=double,  &end
+&column name=T361, symbol="T$b361$n", type=double,  &end
+&column name=T362, symbol="T$b362$n", units=m/rad, type=double,  &end
+&column name=T363, symbol="T$b363$n", type=double,  &end
+&column name=T364, symbol="T$b364$n", units=m/rad, type=double,  &end
+&column name=T365, symbol="T$b365$n", type=double,  &end
+&column name=T366, symbol="T$b366$n", units=m, type=double,  &end
+&column name=T411, symbol="T$b411$n", units="rad/m$a2$n", type=double,  &end
+&column name=T421, symbol="T$b421$n", units=1/m, type=double,  &end
+&column name=T422, symbol="T$b422$n", units=1/rad, type=double,  &end
+&column name=T431, symbol="T$b431$n", units="rad/m$a2$n", type=double,  &end
+&column name=T432, symbol="T$b432$n", units=1/m, type=double,  &end
+&column name=T433, symbol="T$b433$n", units="rad/m$a2$n", type=double,  &end
+&column name=T441, symbol="T$b441$n", units=1/m, type=double,  &end
+&column name=T442, symbol="T$b442$n", units=1/rad, type=double,  &end
+&column name=T443, symbol="T$b443$n", units=1/m, type=double,  &end
+&column name=T444, symbol="T$b444$n", units=1/rad, type=double,  &end
+&column name=T451, symbol="T$b451$n", units="rad/m$a2$n", type=double,  &end
+&column name=T452, symbol="T$b452$n", units=1/m, type=double,  &end
+&column name=T453, symbol="T$b453$n", units="rad/m$a2$n", type=double,  &end
+&column name=T454, symbol="T$b454$n", units=1/m, type=double,  &end
+&column name=T455, symbol="T$b455$n", units="rad/m$a2$n", type=double,  &end
+&column name=T461, symbol="T$b461$n", units=rad/m, type=double,  &end
+&column name=T462, symbol="T$b462$n", type=double,  &end
+&column name=T463, symbol="T$b463$n", units=rad/m, type=double,  &end
+&column name=T464, symbol="T$b464$n", type=double,  &end
+&column name=T465, symbol="T$b465$n", units=rad/m, type=double,  &end
+&column name=T466, symbol="T$b466$n", units=rad, type=double,  &end
+&column name=T511, symbol="T$b511$n", units=1/m, type=double,  &end
+&column name=T521, symbol="T$b521$n", units=1/rad, type=double,  &end
+&column name=T522, symbol="T$b522$n", units="m/rad$a2$n", type=double,  &end
+&column name=T531, symbol="T$b531$n", units=1/m, type=double,  &end
+&column name=T532, symbol="T$b532$n", units=1/rad, type=double,  &end
+&column name=T533, symbol="T$b533$n", units=1/m, type=double,  &end
+&column name=T541, symbol="T$b541$n", units=1/rad, type=double,  &end
+&column name=T542, symbol="T$b542$n", units="m/rad$a2$n", type=double,  &end
+&column name=T543, symbol="T$b543$n", units=1/rad, type=double,  &end
+&column name=T544, symbol="T$b544$n", units="m/rad$a2$n", type=double,  &end
+&column name=T551, symbol="T$b551$n", units=1/m, type=double,  &end
+&column name=T552, symbol="T$b552$n", units=1/rad, type=double,  &end
+&column name=T553, symbol="T$b553$n", units=1/m, type=double,  &end
+&column name=T554, symbol="T$b554$n", units=1/rad, type=double,  &end
+&column name=T555, symbol="T$b555$n", units=1/m, type=double,  &end
+&column name=T561, symbol="T$b561$n", type=double,  &end
+&column name=T562, symbol="T$b562$n", units=m/rad, type=double,  &end
+&column name=T563, symbol="T$b563$n", type=double,  &end
+&column name=T564, symbol="T$b564$n", units=m/rad, type=double,  &end
+&column name=T565, symbol="T$b565$n", type=double,  &end
+&column name=T566, symbol="T$b566$n", units=m, type=double,  &end
+&column name=T611, symbol="T$b611$n", units="1/m$a2$n", type=double,  &end
+&column name=T621, symbol="T$b621$n", units=1/(rad-m), type=double,  &end
+&column name=T622, symbol="T$b622$n", units="1/rad$a2$n", type=double,  &end
+&column name=T631, symbol="T$b631$n", units="1/m$a2$n", type=double,  &end
+&column name=T632, symbol="T$b632$n", units=1/(m-rad), type=double,  &end
+&column name=T633, symbol="T$b633$n", units="1/m$a2$n", type=double,  &end
+&column name=T641, symbol="T$b641$n", units=1/(rad-m), type=double,  &end
+&column name=T642, symbol="T$b642$n", units="1/rad$a2$n", type=double,  &end
+&column name=T643, symbol="T$b643$n", units=1/(rad-m), type=double,  &end
+&column name=T644, symbol="T$b644$n", units="1/rad$a2$n", type=double,  &end
+&column name=T651, symbol="T$b651$n", units="1/m$a2$n", type=double,  &end
+&column name=T652, symbol="T$b652$n", units=1/(m-rad), type=double,  &end
+&column name=T653, symbol="T$b653$n", units="1/m$a2$n", type=double,  &end
+&column name=T654, symbol="T$b654$n", units=1/(m-rad), type=double,  &end
+&column name=T655, symbol="T$b655$n", units="1/m$a2$n", type=double,  &end
+&column name=T661, symbol="T$b661$n", units=1/m, type=double,  &end
+&column name=T662, symbol="T$b662$n", units=1/rad, type=double,  &end
+&column name=T663, symbol="T$b663$n", units=1/m, type=double,  &end
+&column name=T664, symbol="T$b664$n", units=1/rad, type=double,  &end
+&column name=T665, symbol="T$b665$n", units=1/m, type=double,  &end
+&column name=T666, symbol="T$b666$n", type=double,  &end
+&column name=U1111, symbol="U$b1111$n", type=double,  &end
+&column name=U1211, symbol="U$b1211$n", type=double,  &end
+&column name=U1221, symbol="U$b1221$n", type=double,  &end
+&column name=U1222, symbol="U$b1222$n", type=double,  &end
+&column name=U1311, symbol="U$b1311$n", type=double,  &end
+&column name=U1321, symbol="U$b1321$n", type=double,  &end
+&column name=U1322, symbol="U$b1322$n", type=double,  &end
+&column name=U1331, symbol="U$b1331$n", type=double,  &end
+&column name=U1332, symbol="U$b1332$n", type=double,  &end
+&column name=U1333, symbol="U$b1333$n", type=double,  &end
+&column name=U1411, symbol="U$b1411$n", type=double,  &end
+&column name=U1421, symbol="U$b1421$n", type=double,  &end
+&column name=U1422, symbol="U$b1422$n", type=double,  &end
+&column name=U1431, symbol="U$b1431$n", type=double,  &end
+&column name=U1432, symbol="U$b1432$n", type=double,  &end
+&column name=U1433, symbol="U$b1433$n", type=double,  &end
+&column name=U1441, symbol="U$b1441$n", type=double,  &end
+&column name=U1442, symbol="U$b1442$n", type=double,  &end
+&column name=U1443, symbol="U$b1443$n", type=double,  &end
+&column name=U1444, symbol="U$b1444$n", type=double,  &end
+&column name=U1511, symbol="U$b1511$n", type=double,  &end
+&column name=U1521, symbol="U$b1521$n", type=double,  &end
+&column name=U1522, symbol="U$b1522$n", type=double,  &end
+&column name=U1531, symbol="U$b1531$n", type=double,  &end
+&column name=U1532, symbol="U$b1532$n", type=double,  &end
+&column name=U1533, symbol="U$b1533$n", type=double,  &end
+&column name=U1541, symbol="U$b1541$n", type=double,  &end
+&column name=U1542, symbol="U$b1542$n", type=double,  &end
+&column name=U1543, symbol="U$b1543$n", type=double,  &end
+&column name=U1544, symbol="U$b1544$n", type=double,  &end
+&column name=U1551, symbol="U$b1551$n", type=double,  &end
+&column name=U1552, symbol="U$b1552$n", type=double,  &end
+&column name=U1553, symbol="U$b1553$n", type=double,  &end
+&column name=U1554, symbol="U$b1554$n", type=double,  &end
+&column name=U1555, symbol="U$b1555$n", type=double,  &end
+&column name=U1611, symbol="U$b1611$n", type=double,  &end
+&column name=U1621, symbol="U$b1621$n", type=double,  &end
+&column name=U1622, symbol="U$b1622$n", type=double,  &end
+&column name=U1631, symbol="U$b1631$n", type=double,  &end
+&column name=U1632, symbol="U$b1632$n", type=double,  &end
+&column name=U1633, symbol="U$b1633$n", type=double,  &end
+&column name=U1641, symbol="U$b1641$n", type=double,  &end
+&column name=U1642, symbol="U$b1642$n", type=double,  &end
+&column name=U1643, symbol="U$b1643$n", type=double,  &end
+&column name=U1644, symbol="U$b1644$n", type=double,  &end
+&column name=U1651, symbol="U$b1651$n", type=double,  &end
+&column name=U1652, symbol="U$b1652$n", type=double,  &end
+&column name=U1653, symbol="U$b1653$n", type=double,  &end
+&column name=U1654, symbol="U$b1654$n", type=double,  &end
+&column name=U1655, symbol="U$b1655$n", type=double,  &end
+&column name=U1661, symbol="U$b1661$n", type=double,  &end
+&column name=U1662, symbol="U$b1662$n", type=double,  &end
+&column name=U1663, symbol="U$b1663$n", type=double,  &end
+&column name=U1664, symbol="U$b1664$n", type=double,  &end
+&column name=U1665, symbol="U$b1665$n", type=double,  &end
+&column name=U1666, symbol="U$b1666$n", type=double,  &end
+&column name=U2111, symbol="U$b2111$n", type=double,  &end
+&column name=U2211, symbol="U$b2211$n", type=double,  &end
+&column name=U2221, symbol="U$b2221$n", type=double,  &end
+&column name=U2222, symbol="U$b2222$n", type=double,  &end
+&column name=U2311, symbol="U$b2311$n", type=double,  &end
+&column name=U2321, symbol="U$b2321$n", type=double,  &end
+&column name=U2322, symbol="U$b2322$n", type=double,  &end
+&column name=U2331, symbol="U$b2331$n", type=double,  &end
+&column name=U2332, symbol="U$b2332$n", type=double,  &end
+&column name=U2333, symbol="U$b2333$n", type=double,  &end
+&column name=U2411, symbol="U$b2411$n", type=double,  &end
+&column name=U2421, symbol="U$b2421$n", type=double,  &end
+&column name=U2422, symbol="U$b2422$n", type=double,  &end
+&column name=U2431, symbol="U$b2431$n", type=double,  &end
+&column name=U2432, symbol="U$b2432$n", type=double,  &end
+&column name=U2433, symbol="U$b2433$n", type=double,  &end
+&column name=U2441, symbol="U$b2441$n", type=double,  &end
+&column name=U2442, symbol="U$b2442$n", type=double,  &end
+&column name=U2443, symbol="U$b2443$n", type=double,  &end
+&column name=U2444, symbol="U$b2444$n", type=double,  &end
+&column name=U2511, symbol="U$b2511$n", type=double,  &end
+&column name=U2521, symbol="U$b2521$n", type=double,  &end
+&column name=U2522, symbol="U$b2522$n", type=double,  &end
+&column name=U2531, symbol="U$b2531$n", type=double,  &end
+&column name=U2532, symbol="U$b2532$n", type=double,  &end
+&column name=U2533, symbol="U$b2533$n", type=double,  &end
+&column name=U2541, symbol="U$b2541$n", type=double,  &end
+&column name=U2542, symbol="U$b2542$n", type=double,  &end
+&column name=U2543, symbol="U$b2543$n", type=double,  &end
+&column name=U2544, symbol="U$b2544$n", type=double,  &end
+&column name=U2551, symbol="U$b2551$n", type=double,  &end
+&column name=U2552, symbol="U$b2552$n", type=double,  &end
+&column name=U2553, symbol="U$b2553$n", type=double,  &end
+&column name=U2554, symbol="U$b2554$n", type=double,  &end
+&column name=U2555, symbol="U$b2555$n", type=double,  &end
+&column name=U2611, symbol="U$b2611$n", type=double,  &end
+&column name=U2621, symbol="U$b2621$n", type=double,  &end
+&column name=U2622, symbol="U$b2622$n", type=double,  &end
+&column name=U2631, symbol="U$b2631$n", type=double,  &end
+&column name=U2632, symbol="U$b2632$n", type=double,  &end
+&column name=U2633, symbol="U$b2633$n", type=double,  &end
+&column name=U2641, symbol="U$b2641$n", type=double,  &end
+&column name=U2642, symbol="U$b2642$n", type=double,  &end
+&column name=U2643, symbol="U$b2643$n", type=double,  &end
+&column name=U2644, symbol="U$b2644$n", type=double,  &end
+&column name=U2651, symbol="U$b2651$n", type=double,  &end
+&column name=U2652, symbol="U$b2652$n", type=double,  &end
+&column name=U2653, symbol="U$b2653$n", type=double,  &end
+&column name=U2654, symbol="U$b2654$n", type=double,  &end
+&column name=U2655, symbol="U$b2655$n", type=double,  &end
+&column name=U2661, symbol="U$b2661$n", type=double,  &end
+&column name=U2662, symbol="U$b2662$n", type=double,  &end
+&column name=U2663, symbol="U$b2663$n", type=double,  &end
+&column name=U2664, symbol="U$b2664$n", type=double,  &end
+&column name=U2665, symbol="U$b2665$n", type=double,  &end
+&column name=U2666, symbol="U$b2666$n", type=double,  &end
+&column name=U3111, symbol="U$b3111$n", type=double,  &end
+&column name=U3211, symbol="U$b3211$n", type=double,  &end
+&column name=U3221, symbol="U$b3221$n", type=double,  &end
+&column name=U3222, symbol="U$b3222$n", type=double,  &end
+&column name=U3311, symbol="U$b3311$n", type=double,  &end
+&column name=U3321, symbol="U$b3321$n", type=double,  &end
+&column name=U3322, symbol="U$b3322$n", type=double,  &end
+&column name=U3331, symbol="U$b3331$n", type=double,  &end
+&column name=U3332, symbol="U$b3332$n", type=double,  &end
+&column name=U3333, symbol="U$b3333$n", type=double,  &end
+&column name=U3411, symbol="U$b3411$n", type=double,  &end
+&column name=U3421, symbol="U$b3421$n", type=double,  &end
+&column name=U3422, symbol="U$b3422$n", type=double,  &end
+&column name=U3431, symbol="U$b3431$n", type=double,  &end
+&column name=U3432, symbol="U$b3432$n", type=double,  &end
+&column name=U3433, symbol="U$b3433$n", type=double,  &end
+&column name=U3441, symbol="U$b3441$n", type=double,  &end
+&column name=U3442, symbol="U$b3442$n", type=double,  &end
+&column name=U3443, symbol="U$b3443$n", type=double,  &end
+&column name=U3444, symbol="U$b3444$n", type=double,  &end
+&column name=U3511, symbol="U$b3511$n", type=double,  &end
+&column name=U3521, symbol="U$b3521$n", type=double,  &end
+&column name=U3522, symbol="U$b3522$n", type=double,  &end
+&column name=U3531, symbol="U$b3531$n", type=double,  &end
+&column name=U3532, symbol="U$b3532$n", type=double,  &end
+&column name=U3533, symbol="U$b3533$n", type=double,  &end
+&column name=U3541, symbol="U$b3541$n", type=double,  &end
+&column name=U3542, symbol="U$b3542$n", type=double,  &end
+&column name=U3543, symbol="U$b3543$n", type=double,  &end
+&column name=U3544, symbol="U$b3544$n", type=double,  &end
+&column name=U3551, symbol="U$b3551$n", type=double,  &end
+&column name=U3552, symbol="U$b3552$n", type=double,  &end
+&column name=U3553, symbol="U$b3553$n", type=double,  &end
+&column name=U3554, symbol="U$b3554$n", type=double,  &end
+&column name=U3555, symbol="U$b3555$n", type=double,  &end
+&column name=U3611, symbol="U$b3611$n", type=double,  &end
+&column name=U3621, symbol="U$b3621$n", type=double,  &end
+&column name=U3622, symbol="U$b3622$n", type=double,  &end
+&column name=U3631, symbol="U$b3631$n", type=double,  &end
+&column name=U3632, symbol="U$b3632$n", type=double,  &end
+&column name=U3633, symbol="U$b3633$n", type=double,  &end
+&column name=U3641, symbol="U$b3641$n", type=double,  &end
+&column name=U3642, symbol="U$b3642$n", type=double,  &end
+&column name=U3643, symbol="U$b3643$n", type=double,  &end
+&column name=U3644, symbol="U$b3644$n", type=double,  &end
+&column name=U3651, symbol="U$b3651$n", type=double,  &end
+&column name=U3652, symbol="U$b3652$n", type=double,  &end
+&column name=U3653, symbol="U$b3653$n", type=double,  &end
+&column name=U3654, symbol="U$b3654$n", type=double,  &end
+&column name=U3655, symbol="U$b3655$n", type=double,  &end
+&column name=U3661, symbol="U$b3661$n", type=double,  &end
+&column name=U3662, symbol="U$b3662$n", type=double,  &end
+&column name=U3663, symbol="U$b3663$n", type=double,  &end
+&column name=U3664, symbol="U$b3664$n", type=double,  &end
+&column name=U3665, symbol="U$b3665$n", type=double,  &end
+&column name=U3666, symbol="U$b3666$n", type=double,  &end
+&column name=U4111, symbol="U$b4111$n", type=double,  &end
+&column name=U4211, symbol="U$b4211$n", type=double,  &end
+&column name=U4221, symbol="U$b4221$n", type=double,  &end
+&column name=U4222, symbol="U$b4222$n", type=double,  &end
+&column name=U4311, symbol="U$b4311$n", type=double,  &end
+&column name=U4321, symbol="U$b4321$n", type=double,  &end
+&column name=U4322, symbol="U$b4322$n", type=double,  &end
+&column name=U4331, symbol="U$b4331$n", type=double,  &end
+&column name=U4332, symbol="U$b4332$n", type=double,  &end
+&column name=U4333, symbol="U$b4333$n", type=double,  &end
+&column name=U4411, symbol="U$b4411$n", type=double,  &end
+&column name=U4421, symbol="U$b4421$n", type=double,  &end
+&column name=U4422, symbol="U$b4422$n", type=double,  &end
+&column name=U4431, symbol="U$b4431$n", type=double,  &end
+&column name=U4432, symbol="U$b4432$n", type=double,  &end
+&column name=U4433, symbol="U$b4433$n", type=double,  &end
+&column name=U4441, symbol="U$b4441$n", type=double,  &end
+&column name=U4442, symbol="U$b4442$n", type=double,  &end
+&column name=U4443, symbol="U$b4443$n", type=double,  &end
+&column name=U4444, symbol="U$b4444$n", type=double,  &end
+&column name=U4511, symbol="U$b4511$n", type=double,  &end
+&column name=U4521, symbol="U$b4521$n", type=double,  &end
+&column name=U4522, symbol="U$b4522$n", type=double,  &end
+&column name=U4531, symbol="U$b4531$n", type=double,  &end
+&column name=U4532, symbol="U$b4532$n", type=double,  &end
+&column name=U4533, symbol="U$b4533$n", type=double,  &end
+&column name=U4541, symbol="U$b4541$n", type=double,  &end
+&column name=U4542, symbol="U$b4542$n", type=double,  &end
+&column name=U4543, symbol="U$b4543$n", type=double,  &end
+&column name=U4544, symbol="U$b4544$n", type=double,  &end
+&column name=U4551, symbol="U$b4551$n", type=double,  &end
+&column name=U4552, symbol="U$b4552$n", type=double,  &end
+&column name=U4553, symbol="U$b4553$n", type=double,  &end
+&column name=U4554, symbol="U$b4554$n", type=double,  &end
+&column name=U4555, symbol="U$b4555$n", type=double,  &end
+&column name=U4611, symbol="U$b4611$n", type=double,  &end
+&column name=U4621, symbol="U$b4621$n", type=double,  &end
+&column name=U4622, symbol="U$b4622$n", type=double,  &end
+&column name=U4631, symbol="U$b4631$n", type=double,  &end
+&column name=U4632, symbol="U$b4632$n", type=double,  &end
+&column name=U4633, symbol="U$b4633$n", type=double,  &end
+&column name=U4641, symbol="U$b4641$n", type=double,  &end
+&column name=U4642, symbol="U$b4642$n", type=double,  &end
+&column name=U4643, symbol="U$b4643$n", type=double,  &end
+&column name=U4644, symbol="U$b4644$n", type=double,  &end
+&column name=U4651, symbol="U$b4651$n", type=double,  &end
+&column name=U4652, symbol="U$b4652$n", type=double,  &end
+&column name=U4653, symbol="U$b4653$n", type=double,  &end
+&column name=U4654, symbol="U$b4654$n", type=double,  &end
+&column name=U4655, symbol="U$b4655$n", type=double,  &end
+&column name=U4661, symbol="U$b4661$n", type=double,  &end
+&column name=U4662, symbol="U$b4662$n", type=double,  &end
+&column name=U4663, symbol="U$b4663$n", type=double,  &end
+&column name=U4664, symbol="U$b4664$n", type=double,  &end
+&column name=U4665, symbol="U$b4665$n", type=double,  &end
+&column name=U4666, symbol="U$b4666$n", type=double,  &end
+&column name=U5111, symbol="U$b5111$n", type=double,  &end
+&column name=U5211, symbol="U$b5211$n", type=double,  &end
+&column name=U5221, symbol="U$b5221$n", type=double,  &end
+&column name=U5222, symbol="U$b5222$n", type=double,  &end
+&column name=U5311, symbol="U$b5311$n", type=double,  &end
+&column name=U5321, symbol="U$b5321$n", type=double,  &end
+&column name=U5322, symbol="U$b5322$n", type=double,  &end
+&column name=U5331, symbol="U$b5331$n", type=double,  &end
+&column name=U5332, symbol="U$b5332$n", type=double,  &end
+&column name=U5333, symbol="U$b5333$n", type=double,  &end
+&column name=U5411, symbol="U$b5411$n", type=double,  &end
+&column name=U5421, symbol="U$b5421$n", type=double,  &end
+&column name=U5422, symbol="U$b5422$n", type=double,  &end
+&column name=U5431, symbol="U$b5431$n", type=double,  &end
+&column name=U5432, symbol="U$b5432$n", type=double,  &end
+&column name=U5433, symbol="U$b5433$n", type=double,  &end
+&column name=U5441, symbol="U$b5441$n", type=double,  &end
+&column name=U5442, symbol="U$b5442$n", type=double,  &end
+&column name=U5443, symbol="U$b5443$n", type=double,  &end
+&column name=U5444, symbol="U$b5444$n", type=double,  &end
+&column name=U5511, symbol="U$b5511$n", type=double,  &end
+&column name=U5521, symbol="U$b5521$n", type=double,  &end
+&column name=U5522, symbol="U$b5522$n", type=double,  &end
+&column name=U5531, symbol="U$b5531$n", type=double,  &end
+&column name=U5532, symbol="U$b5532$n", type=double,  &end
+&column name=U5533, symbol="U$b5533$n", type=double,  &end
+&column name=U5541, symbol="U$b5541$n", type=double,  &end
+&column name=U5542, symbol="U$b5542$n", type=double,  &end
+&column name=U5543, symbol="U$b5543$n", type=double,  &end
+&column name=U5544, symbol="U$b5544$n", type=double,  &end
+&column name=U5551, symbol="U$b5551$n", type=double,  &end
+&column name=U5552, symbol="U$b5552$n", type=double,  &end
+&column name=U5553, symbol="U$b5553$n", type=double,  &end
+&column name=U5554, symbol="U$b5554$n", type=double,  &end
+&column name=U5555, symbol="U$b5555$n", type=double,  &end
+&column name=U5611, symbol="U$b5611$n", type=double,  &end
+&column name=U5621, symbol="U$b5621$n", type=double,  &end
+&column name=U5622, symbol="U$b5622$n", type=double,  &end
+&column name=U5631, symbol="U$b5631$n", type=double,  &end
+&column name=U5632, symbol="U$b5632$n", type=double,  &end
+&column name=U5633, symbol="U$b5633$n", type=double,  &end
+&column name=U5641, symbol="U$b5641$n", type=double,  &end
+&column name=U5642, symbol="U$b5642$n", type=double,  &end
+&column name=U5643, symbol="U$b5643$n", type=double,  &end
+&column name=U5644, symbol="U$b5644$n", type=double,  &end
+&column name=U5651, symbol="U$b5651$n", type=double,  &end
+&column name=U5652, symbol="U$b5652$n", type=double,  &end
+&column name=U5653, symbol="U$b5653$n", type=double,  &end
+&column name=U5654, symbol="U$b5654$n", type=double,  &end
+&column name=U5655, symbol="U$b5655$n", type=double,  &end
+&column name=U5661, symbol="U$b5661$n", type=double,  &end
+&column name=U5662, symbol="U$b5662$n", type=double,  &end
+&column name=U5663, symbol="U$b5663$n", type=double,  &end
+&column name=U5664, symbol="U$b5664$n", type=double,  &end
+&column name=U5665, symbol="U$b5665$n", type=double,  &end
+&column name=U5666, symbol="U$b5666$n", type=double,  &end
+&column name=U6111, symbol="U$b6111$n", type=double,  &end
+&column name=U6211, symbol="U$b6211$n", type=double,  &end
+&column name=U6221, symbol="U$b6221$n", type=double,  &end
+&column name=U6222, symbol="U$b6222$n", type=double,  &end
+&column name=U6311, symbol="U$b6311$n", type=double,  &end
+&column name=U6321, symbol="U$b6321$n", type=double,  &end
+&column name=U6322, symbol="U$b6322$n", type=double,  &end
+&column name=U6331, symbol="U$b6331$n", type=double,  &end
+&column name=U6332, symbol="U$b6332$n", type=double,  &end
+&column name=U6333, symbol="U$b6333$n", type=double,  &end
+&column name=U6411, symbol="U$b6411$n", type=double,  &end
+&column name=U6421, symbol="U$b6421$n", type=double,  &end
+&column name=U6422, symbol="U$b6422$n", type=double,  &end
+&column name=U6431, symbol="U$b6431$n", type=double,  &end
+&column name=U6432, symbol="U$b6432$n", type=double,  &end
+&column name=U6433, symbol="U$b6433$n", type=double,  &end
+&column name=U6441, symbol="U$b6441$n", type=double,  &end
+&column name=U6442, symbol="U$b6442$n", type=double,  &end
+&column name=U6443, symbol="U$b6443$n", type=double,  &end
+&column name=U6444, symbol="U$b6444$n", type=double,  &end
+&column name=U6511, symbol="U$b6511$n", type=double,  &end
+&column name=U6521, symbol="U$b6521$n", type=double,  &end
+&column name=U6522, symbol="U$b6522$n", type=double,  &end
+&column name=U6531, symbol="U$b6531$n", type=double,  &end
+&column name=U6532, symbol="U$b6532$n", type=double,  &end
+&column name=U6533, symbol="U$b6533$n", type=double,  &end
+&column name=U6541, symbol="U$b6541$n", type=double,  &end
+&column name=U6542, symbol="U$b6542$n", type=double,  &end
+&column name=U6543, symbol="U$b6543$n", type=double,  &end
+&column name=U6544, symbol="U$b6544$n", type=double,  &end
+&column name=U6551, symbol="U$b6551$n", type=double,  &end
+&column name=U6552, symbol="U$b6552$n", type=double,  &end
+&column name=U6553, symbol="U$b6553$n", type=double,  &end
+&column name=U6554, symbol="U$b6554$n", type=double,  &end
+&column name=U6555, symbol="U$b6555$n", type=double,  &end
+&column name=U6611, symbol="U$b6611$n", type=double,  &end
+&column name=U6621, symbol="U$b6621$n", type=double,  &end
+&column name=U6622, symbol="U$b6622$n", type=double,  &end
+&column name=U6631, symbol="U$b6631$n", type=double,  &end
+&column name=U6632, symbol="U$b6632$n", type=double,  &end
+&column name=U6633, symbol="U$b6633$n", type=double,  &end
+&column name=U6641, symbol="U$b6641$n", type=double,  &end
+&column name=U6642, symbol="U$b6642$n", type=double,  &end
+&column name=U6643, symbol="U$b6643$n", type=double,  &end
+&column name=U6644, symbol="U$b6644$n", type=double,  &end
+&column name=U6651, symbol="U$b6651$n", type=double,  &end
+&column name=U6652, symbol="U$b6652$n", type=double,  &end
+&column name=U6653, symbol="U$b6653$n", type=double,  &end
+&column name=U6654, symbol="U$b6654$n", type=double,  &end
+&column name=U6655, symbol="U$b6655$n", type=double,  &end
+&column name=U6661, symbol="U$b6661$n", type=double,  &end
+&column name=U6662, symbol="U$b6662$n", type=double,  &end
+&column name=U6663, symbol="U$b6663$n", type=double,  &end
+&column name=U6664, symbol="U$b6664$n", type=double,  &end
+&column name=U6665, symbol="U$b6665$n", type=double,  &end
+&column name=U6666, symbol="U$b6666$n", type=double,  &end
+&data mode=binary, &end
+                  _BEG_      MARK                                                      ?                                                      ?                                                      ?                                                      ?                                                      ?                                                      ?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           W1      WATCH                                                      ?                                                      ?                                                      ?                                                      ?                                                      ?                                                      ?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ŸŒ˜S„’?   QF      KQUAD                                ŸŒ˜S„’?        CIÏ^Ô?„:35ı≠’?                                Ú√tlı>≈øCIÏ^Ô?                                                ¸?”˜Ôu?¯ºÎA÷?                                mCqd›ß≈?¸?”˜Ôu?                                                      ?                                                      ?                                                                                                                        ˛≥Û◊~ù?¿;"Õõj?                                                                                                                                                        „¯KŒ
+≈?˛≥Û◊~ù?                                                                                                                                                                        Lâ	œ†ùø@ ˆ®TÍjø                                                                                                                                                        µ™∆pû‹≈øLâ	œ†ùø                }§ómÌY?Hê∞v†…úøåÏnÄy≈?                ôëXáZ?                ¶àøg®Ëù?òZøõO∆?                                                                                                                                                                                                                                                                @–•;“)ø‡bƒƒΩs?Ô5ÇQH.•ø–Qk“ùsø                        ¿”:÷…|*ø w∆ÊèˇY?                                ê©õ‚Qöjø§W‘$ºVù?        ’Ì7∏Ëçø ^†Ä˙rZ?                                                                                                                                                                                                                                                                .–≠∂ΩıúøVÛ"#çjø                                ÙÂ˝ú*≠bøùëtà_t§?¶”∆Õø5ÇQH.•ø                        ‘â-a´gcø“K¸íVå?                                [≥∑¶ rùøˆΩ¥Çap≈?        ∏üG∂øiòª¿ƒå?                                                                                                                                                                                                                                                                ‚ÕØÕ„ƒø.–≠∂Ωıúø                                                                 &Ùö@*?ÁÉPÌŸiøØ†âπ≥…å?                 1ßˇ˘Ì*?§ÅÊ'sZ?¶µ&t¿Vùø¯Œ]Ω[ø                P$í9Lt?                ®≥T`·‹¶?àOÉÈmât?                                                                                                                                                                                                                                                                —Êªù?Ì@≈Ñ˘j?                                                z¸”*Æ%c?Œ–¥iúøvÒ¢§¥?                8‘L‰c?≠+g”ã)ç?EÜ…np≈ø† √.Õ„çø                îŒıéú∏¶?                ªŸèÜ	Y—?•≥T`·‹¶?                                                                                                                                                                                                                                                                ﬁbY4L∆?—Êªù?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ·zÆGa@   D      DRIF                                æü/›§@              ?æü/›§@                                              ?                                                      ?æü/›§@                                              ?                                                      ?                                                      ?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                æü/›§¸?                                                æü/›§¸?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                È&1¨\@   QD      KQUAD                                ƒK7âA`Â?        	"¸»e—Ò?7”Ú˚-Ê?                                ?‘Y<Ÿ,÷?	"¸»e—Ò?                                                (†f∂,Ï?i^yÓó‰?                                'Véñ‘ø(†f∂,Ï?                                                      ?                                                      ?                                                                                                                        ˛-ˇ
+E†Ωø0©ö2∞ öø                                                                                                                                                        \NZ‘¸÷ø˛-ˇ
+E†Ωø                                                                                                                                                                        w-fºÄª?ó‰A;ﬁò?                                                                                                                                                        OÚcœ”?w-fºÄª?                !P·¢ïä?ƒ4fΩæ?|-ó±	◊?                ·Ÿj}¥Pà?                Â}òV·}∫øl8U"€”?                                                                                                                                                                                                                                                                (ÓîM3¢k?g†á•?€à	éäœ»?¥Z\ÎÍ⁄§?                        ∏ã·πi?‹ù—ˇ‰<ä?                                †∞ oòøówê§¡zºø        ∑Å˙ÀD™?¬«ùø…{äø                                                                                                                                                                                                                                                                ’1´∂wæ?|2V.8ö?                                 d£ÎÈÖï?«Ø¿¬ﬂ ?Œë’ÔFÂ?›à	éäœ»?                        ≥4)c}êí?>%;˘∑	Æ?                                §√´N/Îπø®%–g~5’ø        h}ÊwX¬?um&}>vÆø                                                                                                                                                                                                                                                                åŒÃäö◊?’1´∂wæ?                                                                0º÷EÊËiøTÀ1⁄öø;S§æÆø                êŒr%§vgøú»>Ωâà?KONe yº?∏–∞áe6à?                ÏëæÇ◊†?                súQm¬øÿ¥øxr°ø                                                                                                                                                                                                                                                                cCk•ªø£âç¢®òø                                                ñ°<”[éìø$+‚QÒ8øø„ApÚ≤»ø                
+îÒ[•÷êøê2ƒ∆Ÿ™?‹6*ö2’?êcI&ë5™?                É€
+⁄œR¡?                æÙ@Jÿe◊øsúQm¬ø                                                                                                                                                                                                                                                                Á>ÛRö;”øcCk•ªø                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d;ﬂOçW @   D      DRIF                                æü/›§@              ?æü/›§@                                              ?                                                      ?æü/›§@                                              ?                                                      ?                                                      ?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                æü/›§¸?                                                æü/›§¸?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -≤ùÔß!@   QF      KQUAD                                 ŸŒ˜S„’?        CIÏ^Ô?„:35ı≠’?                                Ú√tlı>≈øCIÏ^Ô?                                                ¸?”˜Ôu?¯ºÎA÷?                                mCqd›ß≈?¸?”˜Ôu?                                                      ?                                                      ?                                                                                                                        ˛≥Û◊~ù?¿;"Õõj?                                                                                                                                                        „¯KŒ
+≈?˛≥Û◊~ù?                                                                                                                                                                        Lâ	œ†ùø@ ˆ®TÍjø                                                                                                                                                        µ™∆pû‹≈øLâ	œ†ùø                }§ómÌY?Hê∞v†…úøåÏnÄy≈?                ôëXáZ?                ¶àøg®Ëù?òZøõO∆?                                                                                                                                                                                                                                                                @–•;“)ø‡bƒƒΩs?Ô5ÇQH.•ø–Qk“ùsø                        ¿”:÷…|*ø w∆ÊèˇY?                                ê©õ‚Qöjø§W‘$ºVù?        ’Ì7∏Ëçø ^†Ä˙rZ?                                                                                                                                                                                                                                                                .–≠∂ΩıúøVÛ"#çjø                                ÙÂ˝ú*≠bøùëtà_t§?¶”∆Õø5ÇQH.•ø                        ‘â-a´gcø“K¸íVå?                                [≥∑¶ rùøˆΩ¥Çap≈?        ∏üG∂øiòª¿ƒå?                                                                                                                                                                                                                                                                ‚ÕØÕ„ƒø.–≠∂Ωıúø                                                                 &Ùö@*?ÁÉPÌŸiøØ†âπ≥…å?                 1ßˇ˘Ì*?§ÅÊ'sZ?¶µ&t¿Vùø¯Œ]Ω[ø                P$í9Lt?                ®≥T`·‹¶?àOÉÈmât?                                                                                                                                                                                                                                                                —Êªù?Ì@≈Ñ˘j?                                                z¸”*Æ%c?Œ–¥iúøvÒ¢§¥?                8‘L‰c?≠+g”ã)ç?EÜ…np≈ø† √.Õ„çø                îŒıéú∏¶?                ªŸèÜ	Y—?•≥T`·‹¶?                                                                                                                                                                                                                                                                ﬁbY4L∆?—Êªù?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

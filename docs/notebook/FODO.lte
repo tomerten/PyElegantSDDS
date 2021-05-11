@@ -1,0 +1,8 @@
+! FODO cell used by Jernej Frank for studying TRIBs
+
+QF    : KQUAD, L= 0.342000000000, K1= 0.490000000000, N_KICKS=16.000000000000
+QD    : KQUAD, L= 0.668000000000, K1=-0.499900000000, N_KICKS=16.000000000000
+D     : DRIF, L= 3.580500000000
+W1    : WATCH, filename="%s-%03ld.w1", mode=coordinates
+
+FODO  : LINE=(W1,QF,D,QD,D,QF)
