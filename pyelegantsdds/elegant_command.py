@@ -253,9 +253,22 @@ class ElegantCommandFile:
         # clear commandlist
         self.commandlist = []
 
-    def optimize(self, lattice):
-        # TODO
-        pass
+    def remove_command(self, commandname, mode="last"):
+        # create command index list to be able
+        # to choose which one to change
+        clist = [d.get("NAME") for d in self.commandlist]
+        indlist = [i for i, x in enumerate(clist) if x == commandname]
+
+        if mode == "last":
+            self.commandlist = (
+                self.commandlist[: indlist[-1]] + self.commandlist[indlist[-1] + 1 :]
+            )
+        elif mode == "first":
+            self.commandlist = self.commandlist[: indlist[0]] + self.commandlist[indlist[0] + 1 :]
+        else:
+            self.commandlist = (
+                self.commandlist[: indlist[mode]] + self.commandlist[indlist[mode] + 1 :]
+            )
 
     def write(self, outputfilename="", mode="w"):
         """
@@ -289,3 +302,5 @@ class ElegantCommandFile:
                         else:
                             outfile.write("\t{:40s}= {},\n".format(k, v))
                 outfile.write("&end\n\n")
+        self._addHistory(self.commandlist)
+        self.clear()

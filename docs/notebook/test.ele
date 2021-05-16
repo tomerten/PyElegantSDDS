@@ -1,0 +1,12 @@
+&run_setup
+	lattice             = partrack.lte,
+	use_beamline        = FODO,
+	p_central_mev       = 1700.0,
+	default_order       = 1,
+	concat_order        = 3,
+	rootname            = temp,
+	parameters          = %s.params,
+	semaphore_file      = %s.done,
+	magnets             = %s.mag,
+&end
+
