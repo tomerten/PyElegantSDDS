@@ -144,13 +144,16 @@ class SDDSCommand:
 
         return cmdstr
 
-    def runCommand(self, commandstring):
+    def runCommand(self, commandstring=None):
         """Run the command.
 
         Parameters
         ----------
         commandstring : str
         """
+        if commandstring is None:
+            name = self.command.pop("NAME")
+            commandstring = self.getCommand(name, **self.command)
         print("Running command {}".format(commandstring))
         subp.run(commandstring, check=True, shell=True)
 
@@ -223,7 +226,7 @@ class SDDS:
         Parameters
         ----------
         command : str
-                                                                        valid sdds command
+                                                                                                                                        valid sdds command
         """
         sddscommand = SDDSCommand(self.sif)
         cmdstr = sddscommand.getCommand(command, **params)
@@ -309,8 +312,8 @@ class SDDS:
         Parameters
         ----------
         history_idx : int
-            index of history command to reload
-            use `printHistory()` to get an overview
+                index of history command to reload
+                use `printHistory()` to get an overview
         """
         self.clearCommandList(save=True)
         self.commandlist = self.command_history.get(history_idx)
@@ -516,8 +519,8 @@ class SDDS:
         Parameters
         ----------
         vary : bool, optional
-            adds a step column for distinguising between the
-            different vary_element steps.
+                adds a step column for distinguising between the
+                different vary_element steps.
         Returns
         -------
         DataFrame (pandas or dask)
