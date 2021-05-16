@@ -1,45 +1,27 @@
 &run_setup
-	lattice             = parTrack.lte,
-	use_beamline        = par,
-	p_central_mev       = 880,
-	centroid            = %s.cen,
-	default_order       = 2,
+	lattice             = FODO.lte,
+	use_beamline        = FODO,
+	p_central_mev       = 1700.0,
+	default_order       = 1,
 	concat_order        = 3,
 	rootname            = temp,
 	parameters          = %s.params,
 	semaphore_file      = %s.done,
 	magnets             = %s.mag,
-	losses              = %s.los,
-&end
-
-&twiss_output
-	filename            = %s.twi,
-	output_at_each_step = 1,
 &end
 
 &run_control
-	n_passes            = 512,
+	n_passes            = 100,
 &end
 
-&find_aperture
-	output              = %s.aper,
-	mode                = n-line,
-	verbosity           = 0,
-	xmin                = -0.1,
-	xmax                = 0.1,
-	xpmin               = 0.0,
-	xpmax               = 0.0,
-	ymin                = 0,
-	ymax                = 0.1,
-	ypmin               = 0.0,
-	ypmax               = 0.0,
-	nx                  = 21,
-	ny                  = 21,
-	n_lines             = 41,
-	split_fraction      = 0.5,
-	n_splits            = 0,
-	desired_resolution  = 0.01,
-	offset_by_orbit     = 0,
-	full_plane          = 1,
+&bunched_beam
+&end
+
+&sdds_beam
+	input               = temp_particles_input.bin,
+	input_type          = "elegant",
+&end
+
+&track
 &end
 

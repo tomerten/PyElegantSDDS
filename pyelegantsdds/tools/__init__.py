@@ -4,16 +4,6 @@
 Module pyelegantsdds.tools 
 =================================================================
 
-A module 
+A module containing basic SDDS commands. 
 
 """
-
-# your imports here ...
-
-
-def greet(to=""):
-    """Say "Hello <to>!".
-
-    :param str to: whom you want to say hello to.
-    """
-    f"Hello {to}!"

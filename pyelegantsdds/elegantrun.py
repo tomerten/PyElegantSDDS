@@ -302,7 +302,7 @@ class ElegantRun:
             lattice=self.lattice,
             use_beamline=self.kwargs.get("use_beamline", None),
             p_central_mev=self.kwargs.get("energy", 1700.00),
-            centroid="%s.cen",
+            # centroid="%s.cen",
             default_order=kwargs.get("default_order", 1),
             concat_order=kwargs.get("concat_order", 3),
             rootname="temp",
@@ -706,14 +706,6 @@ class ElegantRun:
         # run will write command file and execute it
         self.run()
 
-    def manual_vary_input_table(self):
-        """
-        Create a vary table to use with elegant tracking,
-        generated from manual input values.
-        """
-        # TODO: add manual vary table generation
-        pass
-
     def track_simple(self, **kwargs):
         """
         Track a set of particles.
@@ -733,13 +725,57 @@ class ElegantRun:
         # run will write command file and execute it
         self.run()
 
-    def track_vary(self):
+    def track_vary(
+        self, varydict: dict, varyitemlist=None, mode="row", add_watch_start=False, **kwargs
+    ):
         """
         Track a set of particles in combination with a
         vary command.
         """
-        # TODO: add method to track with vary
-        pass
+        assert varyitemlist is not None
+        assert len(varyitemlist) == len(varydict)
+        assert mode.lower() in ["row", "table"]
+
+        # generate the sdds input file
+        sdds = SDDS(self.sif, "temp.sdds", 0)
+        sdds.generate_scan_dataset(varydict)
+
+        self.commandfile.clear()
+        self.add_basic_setup()
+        if add_watch_start:
+            self.add_watch_at_start()
+        n_idx = 1 if mode == "row" else len(varydict)
+        self.commandfile.addCommand(
+            "run_control", n_indices=n_idx, n_passes=kwargs.get("n_passes", 2 ** 8)
+        )
+        if mode == "table":
+            for i, it in enumerate(varydict.items()):
+                k, v = it
+                self.add_vary_element_from_file(
+                    name=k,
+                    item=varyitemlist[i],
+                    index_number=i,
+                    index_limit=len(v),
+                    enumeration_file="temp.sdds",
+                    enumeration_column=k,
+                )
+        else:
+            for i, it in enumerate(varydict.items()):
+                k, v = it
+                self.add_vary_element_from_file(
+                    name=k,
+                    item=varyitemlist[i],
+                    index_number=0,
+                    index_limit=len(v),
+                    enumeration_file="temp.sdds",
+                    enumeration_column=k,
+                )
+        self.commandfile.addCommand("bunched_beam")
+        self.commandfile.addCommand(
+            "sdds_beam", input=self.sdds_beam_file, input_type='"elegant"', reuse_bunch=1
+        )
+        self.commandfile.addCommand("track")
+        self.run()
 
     def fma(self, **kwargs):
         """
@@ -797,7 +833,7 @@ class ElegantRun:
         for i, l in enumerate(scan_list_of_dicts):
             self.commandfile.addCommand(
                 "vary_element",
-                naem=l.get("name"),
+                name=l.get("name"),
                 item=l.get("item"),
                 initial=l.get("initial"),
                 final=l.get("final"),

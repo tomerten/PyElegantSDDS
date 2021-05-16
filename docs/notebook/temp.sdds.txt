@@ -1,0 +1,8 @@
+SDDS1
+&column name=Q1, type=double,  &end
+&column name=Q2, type=double,  &end
+&data mode=ascii, &end
+! page number 1
+                   2
+ 1.776022448154000e+00  2.285915530046000e+00 
+ 1.796022448154000e+00  2.305915530046000e+00 

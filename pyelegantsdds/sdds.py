@@ -6,6 +6,11 @@ Module pyelegantsdds.sdds
 
 A module containing the SDDSCommand class and  SDDS class.
 
+The SDDSCommand class is responsible for creating, editing, etc ... of SDDS
+commands.
+
+The SDDS class uses the SDDSCommand class to build template and composed commands.
+
 """
 
 import os
@@ -22,7 +27,14 @@ from dask import dataframe as dd
 from .tools.sddsutils import sddsconvert2ascii, sddsconvert2binary
 
 
+# ================================================================================
+# SDDSCommand class:
+#
+#
+# ================================================================================
 class SDDSCommand:
+    """SDDSCommand manupilation class"""
+
     _COMMANDLIST = [
         "plaindata2sdds",
         "sdds2stream",
@@ -40,7 +52,7 @@ class SDDSCommand:
         self.sif = sif
         self.command = {}
 
-    def createCommand(self, command, note="", **params):
+    def createCommand(self, command: str, note: str = "", **params) -> None:
         """
         Method to add a command to the command file.
         Generates a dict to reconstruct command string,
@@ -49,19 +61,15 @@ class SDDSCommand:
         Parameters:
         ----------
         command     : str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        valid Elegant command
         note        : str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        info
 
         Key Parameters:
         ---------------
         params : dict
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        additional parameters for the command
 
         Returns:
         --------
         None
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        updates the command property
         """
         # check if it is a valid Elegant command
         if self.checkCommand(command) == False:
@@ -79,7 +87,7 @@ class SDDSCommand:
         # add the command dict to the command list
         self.command = thiscom
 
-    def checkCommand(self, typename):
+    def checkCommand(self, typename: str) -> bool:
         """
         Check if a command is a valid
         Elegant command.
@@ -87,11 +95,10 @@ class SDDSCommand:
         Parameters:
         -----------
         typename    : str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        command type
 
         Returns:
         --------
-        ok : boolean
+        boolean
 
         """
         for tn in self._COMMANDLIST:
@@ -106,17 +113,16 @@ class SDDSCommand:
         self.command = {}
 
     def getCommand(self, command, **params):
-        """Method to get the command.count()
+        """Method to get the command.
 
         Parameters
         ----------
         command : dict
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        command and arguments in dictionary form
 
         Returns
         -------
         str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        command string to be executed
+        command string
         """
         # create command
         self.createCommand(command, **params)
@@ -144,33 +150,15 @@ class SDDSCommand:
         Parameters
         ----------
         commandstring : str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        command string to be exectured
         """
         print("Running command {}".format(commandstring))
         subp.run(commandstring, check=True, shell=True)
 
-    def get_particles_plain_2_SDDS_command(self, **params):
+    def get_particles_plain_2_SDDS_command(self, **params) -> str:
         """
         Returns sdds command to turn plain data table, separated
         by a *space* into SDDS particle initial coordinates SDDS file.
         Easy to generate plain data with pandas.
-
-        Example:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        pd.DataFrame([
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        'x':0.000,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        'px':1.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        },
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        'x':5.000,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        'px':1.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ]).to_csv('testplain.dat',sep=' ',header=None, index=False)
-
-        Parameters:
-        ----------
-        params      :
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        - outputMode: set ascii for serial elegant and binary for Pelegant
 
         """
         return self.getCommand(
@@ -229,16 +217,13 @@ class SDDS:
         assert value in [0, 1]
         self._filetype = value
 
-    def addCommand(self, command, **params):
-        """
-        Method to add a command to the command file.
+    def addCommand(self, command: str, **params) -> None:
+        """Add a command to the command list.
 
-        Arguments:
+        Parameters
         ----------
-        command     : str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        valid Elegant command
-        params      :
-
+        command : str
+                                                                        valid sdds command
         """
         sddscommand = SDDSCommand(self.sif)
         cmdstr = sddscommand.getCommand(command, **params)
@@ -246,14 +231,13 @@ class SDDS:
         # add command to current commandlist
         self.commandlist.append(cmdstr)
 
-    def clearCommandList(self, save=True):
+    def clearCommandList(self, save: bool = True) -> None:
         """
         Clear the command list.
 
         Parameters:
         -----------
         bool: save
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        save command list to history before clearing, default is True
         """
         if save and len(self.commandlist) > 0:
             self._addHistory(self.commandlist)
@@ -274,7 +258,6 @@ class SDDS:
         Parameters:
         -----------
         list | str : cmdlist
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        command or list of commands to add to history.
         """
         _key = next(self._count_iter)
         if not isinstance(cmdlist, list):
@@ -307,8 +290,8 @@ class SDDS:
 
     def printHistory(self):
         """Print command history."""
-        if len(self.history) > 0:
-            for i, l in self.history.items():
+        if len(self.command_history) > 0:
+            for i, l in self.command_history.items():
                 print("History key: {}\n".format(i))
                 print("---------------\n")
                 for c in l:
@@ -316,22 +299,36 @@ class SDDS:
 
                 # print extra newline
                 print("\n")
+        else:
+            print("History is empty.")
 
-    def rerun(self, history_idx):
+    def reload_from_history(self, history_idx: int) -> None:
+        """Reloads the commandlist from history with index
+        history_idx.
+
+        Parameters
+        ----------
+        history_idx : int
+            index of history command to reload
+            use `printHistory()` to get an overview
+        """
+        self.clearCommandList(save=True)
+        self.commandlist = self.command_history.get(history_idx)
+
+    def rerun_from_history(self, history_idx):
         """Rerun a history entry.count()
 
         Parameters
         ----------
         history_idx : int
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        index of or key of the history dict
         """
-        assert history_idx in list(self.history.keys())
+        assert history_idx in list(self.command_history.keys())
 
         self.clearCommandList(save=True)
-        self.commandlist = self.history.get(history_idx)
+        self.commandlist = self.command_history.get(history_idx)
         self.runCommand()
 
-    def load(self):
+    def load_raw_data(self):
         """Read the data from file."""
         if self.filetype == 1:
             # ASCII FORMAT
@@ -343,13 +340,12 @@ class SDDS:
             with open(self.filename, "rb") as f:
                 self.raw_content = f.read()
 
-    def convert(self, outfile):
+    def convert(self, outfile: str = None):
         """Convert between filetypes.
 
         Parameters
         ----------
         outfile : str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        output filename
         """
         if self.filetype == 0:
             converted_filename = self.filename + ".txt"
@@ -391,7 +387,6 @@ class SDDS:
         Returns
         -------
         list
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        list of column names
         """
         # command string
         cmdstr = "{} sddsquery -columnList {}".format(self.sif, self.filename)
@@ -416,12 +411,10 @@ class SDDS:
         Parameters
         ----------
         memory_threshold : float, optional
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        memory limit to us<e to switch between frame and file, by default 100e6
 
         Returns
         -------
         str | pandas.DataFrame
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        column data or filename containing the data
         """
         # make sure we have the column names
         if self.columnlist is None:
@@ -474,7 +467,6 @@ class SDDS:
         Returns
         -------
         list
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        list of parameter names
         """
         # command string
         cmdstr = "{} sddsquery -parameterList {}".format(self.sif, self.filename)
@@ -498,7 +490,6 @@ class SDDS:
         Returns
         -------
         dataframe
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        frame containing the parameter values
         """
         cmdstr = "{} sddsprintout -parameters=* -spreadsheet {}".format(self.sif, self.filename)
         p = subp.Popen(cmdstr, stdout=subp.PIPE, shell=True)
@@ -515,7 +506,7 @@ class SDDS:
         )
 
         df = df.set_index("ParameterName", drop=True)
-        df = pd.to_numeric(df.drop(["SVNVersion", "Stage"])["ParameterValue"])
+        df = pd.to_numeric(df.drop(["SVNVersion", "Stage"], errors="ignore")["ParameterValue"])
         self.ParameterName = df
         return df
 
@@ -525,13 +516,11 @@ class SDDS:
         Parameters
         ----------
         vary : bool, optional
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        used to switch when vary element was used in the simulation, by default False
-
+            adds a step column for distinguising between the
+            different vary_element steps.
         Returns
         -------
         DataFrame (pandas or dask)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Column data, depending on the size as a pandas dataframe or a lazy
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dask dataframe.
         """
         # if vary command was used in ele command file
         # convert data and add step column
@@ -625,7 +614,7 @@ class SDDS:
         Basic sddsplot command.
         """
         sddscommand = SDDSCommand(self.sif)
-        cmd = sddscommand.getCommand("sddsplot", **kwargs)
+        cmd = sddscommand.getCommand("sddsplot", file=self.filename, **kwargs)
 
         # add to command history
         self._addHistory(cmd)
@@ -721,10 +710,10 @@ class SDDS:
 		>>> sdds.generate_scan_dataset(datasetdc)
 
 		"""
-        cmd = f"{self.sif}  sddsmakedataset temp_scan.sdds "
+        cmd = f"{self.sif}  sddsmakedataset {self.filename} "
 
         for k, v in datasetdict.items():
             cmd += f"-column={k},type=double -data=" + ",".join([str(vv) for vv in v]) + " "
 
         subp.run(cmd, check=True, shell=True)
-        self.sdds_scan = "temp_scan.sdds"
+        self.sdds_scan = "temp.sdds"
