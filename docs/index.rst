@@ -12,6 +12,10 @@ Welcome to PyElegantSDDS's documentation!
    authors
    history
    notebook/Tutorial_ElegantRun.ipynb
+   notebook/Tutorial_sddscommand.ipynb
+   notebook/Tutorial_SDDS.ipynb
+   notebook/Tutorial_ElegantCommand.ipynb
+   notebook/Tutorial_ElegantRun_Basic.ipynb
 
 ##################
 Indices and tables

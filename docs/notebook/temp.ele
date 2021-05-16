@@ -1,7 +1,7 @@
 &run_setup
-	lattice             = FODO.lte,
-	use_beamline        = FODO,
-	p_central_mev       = 1700.0,
+	lattice             = parTrack.lte,
+	use_beamline        = par,
+	p_central_mev       = 880.0,
 	default_order       = 1,
 	concat_order        = 3,
 	rootname            = temp,
@@ -10,22 +10,30 @@
 	magnets             = %s.mag,
 &end
 
-&matrix_output
-	SDDS_output         = %s.sdds,
-	SDDS_output_order   = 3,
-	printout            = %s.mat,
-	printout_order      = 3,
-	full_matrix_only    = 0,
-	individual_matrices = 1,
-	output_at_each_step = 1,
-&end
-
 &run_control
+	n_passes            = 256,
 &end
 
-&bunched_beam
+&twiss_output
+	filename            = %s.twi,
+	matched             = 1,
+	radiation_integrals = 1,
 &end
 
-&track
+&frequency_map
+	output              = %s.fma,
+	xmin                = -0.05,
+	xmax                = 0.05,
+	ymin                = 0,
+	ymax                = 0.02,
+	delta_min           = 0,
+	delta_max           = 0,
+	nx                  = 51,
+	ny                  = 51,
+	ndelta              = 1,
+	verbosity           = 0,
+	include_changes     = 1,
+	quadratic_spacing   = 0,
+	full_grid_output    = 1,
 &end
 
