@@ -1,6 +1,6 @@
 SDDS1
 !# little-endian
-&description text="Twiss parameters--input: temp.ele  lattice: parTrack.lte", contents="Twiss parameters", &end
+&description text="Twiss parameters--input: temp.ele  lattice: FODO.lte", contents="Twiss parameters", &end
 &parameter name=Step, description="Simulation step", type=long, &end
 &parameter name=SVNVersion, description="SVN version number", type=string, fixed_value=unknown, &end
 &parameter name=nux, symbol="$gn$r$bx$n", units="1/(2$gp$r)", description="Horizontal tune", type=double, &end
@@ -63,6 +63,21 @@ SDDS1
 &parameter name=emittanceRatio, description="Emittance ratio from coupling integral", type=double, &end
 &parameter name=alphac2, symbol="$ga$r$bc2$n", description="2nd-order momentum compaction factor", type=double, &end
 &parameter name=alphac, symbol="$ga$r$bc$n", description="Momentum compaction factor", type=double, &end
+&parameter name=I1, units=m, description="Radiation integral 1", type=double, &end
+&parameter name=I2, units=1/m, description="Radiation integral 2", type=double, &end
+&parameter name=I3, units="1/m$a2$n", description="Radiation integral 3", type=double, &end
+&parameter name=I4, units=1/m, description="Radiation integral 4", type=double, &end
+&parameter name=I5, units=1/m, description="Radiation integral 5", type=double, &end
+&parameter name=ex0, units="$gp$rm", description="Damped horizontal emittance", type=double, &end
+&parameter name=enx0, units="m$be$nc $gp$rm", description="Damped normalized horizontal emittance", type=double, &end
+&parameter name=taux, units=s, description="Horizontal damping time", type=double, &end
+&parameter name=Jx, description="Horizontal damping partition number", type=double, &end
+&parameter name=tauy, units=s, description="Vertical damping time", type=double, &end
+&parameter name=Jy, description="Vertical damping partition number", type=double, &end
+&parameter name=Sdelta0, description="RMS fractional energy spread", type=double, &end
+&parameter name=taudelta, units=s, description="Longitudinal damping time", type=double, &end
+&parameter name=Jdelta, description="Longitudinal damping partition number", type=double, &end
+&parameter name=U0, units=MeV, description="Energy loss per turn", type=double, &end
 &column name=s, units=m, description=Distance, type=double,  &end
 &column name=betax, symbol="$gb$r$bx$n", units=m, description="Horizontal beta-function", type=double,  &end
 &column name=alphax, symbol="$ga$r$bx$n", description="Horizontal alpha-function", type=double,  &end
@@ -81,4 +96,13 @@ SDDS1
 &column name=ElementOccurence, description="Occurence of element", format_string=%6ld, type=long,  &end
 &column name=ElementType, description="Element-type name", format_string=%10s, type=string,  &end
 &column name=ChamberShape, type=string,  &end
+&column name=dI1, units=m, description="Contribution to radiation integral 1", type=double,  &end
+&column name=dI2, units=1/m, description="Contribution to radiation integral 2", type=double,  &end
+&column name=dI3, units="1/m$a2$n", description="Contribution to radiation integral 3", type=double,  &end
+&column name=dI4, units=1/m, description="Contribution to radiation integral 4", type=double,  &end
+&column name=dI5, units=1/m, description="Contribution to radiation integral 5", type=double,  &end
 &data mode=binary, &end
+       ®
+H,Î?       €                        ÿÿÿÿÿÿïÿT1j›şÍ?       €                        ÿÿÿÿÿÿïÿ        ®
+H,Î?®
+H,Î?T1j›şÍ?T1j›şÍ?   tunes uncorrected_m‰ñ¡ı©@                                                                                                xPVåD@zWİ(ŠZ @Ó=RN	,@à<Ä"Ù@¤d£Æ¶W @¾}„œË *@                                                                                                                                                ->j‹ÖV?                                                                      øÿ      øÿ      øÿ      øÿ      ğ      ğ?      øÿ      øÿ      øÿ                Ğ=RN	,@                                      $@â<Ä"Ù@ÿÿdß"œ<                              $@_m‰ñ¡ı©@   _BEG_      MARK                                                    Ğ=RN	,@                                      $@â<Ä"Ù@ÿÿdß"œ<                              $@_m‰ñ¡ı©@   W1      WATCH   ?                                        ÙÎ÷SãÕ?¾œ_¶òy*@n˜azIå@àWş4w™?                      $@C{áM„@sï¶£4ãã¿Ñ…#ò½?                      $@_m‰ñ¡ı©@   QF      KQUAD   ?                                        áz®Ga@xPVåD@ÀY?Pã?=8vä?                      $@½}„œË *@yeÄÙÀíÀ80+M¼Èæ?                      $@_m‰ñ¡ı©@   D      DRIF   ?                                        é&1¬\@xPVåD@ÄY?Pã¿ş€\Ğbë?                      $@¾}„œË *@xeÄÙÀí@ÖÔkÑÊTè?                      $@_m‰ñ¡ı©@   QD      KQUAD   ?                                        d;ßOW @Àœ_¶òy*@n˜azIåÀ-KzÆL÷?                      $@B{áM„@vï¶£4ãã?š)]£¯õ?                      $@_m‰ñ¡ı©@   D      DRIF   ?                                        -²ï§!@Ó=RN	,@     ¨<Œ_J£²÷?                      $@à<Ä"Ù@      ²<‡‚KÃ÷?                      $@_m‰ñ¡ı©@   QF      KQUAD   ?                                        

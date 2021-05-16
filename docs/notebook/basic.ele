@@ -2,8 +2,7 @@
 	lattice             = FODO.lte,
 	use_beamline        = FODO,
 	p_central_mev       = 1700.0,
-	centroid            = %s.cen,
-	default_order       = 3,
+	default_order       = 1,
 	concat_order        = 3,
 	rootname            = temp,
 	parameters          = %s.params,
@@ -11,14 +10,21 @@
 	magnets             = %s.mag,
 &end
 
-&matrix_output
-	SDDS_output         = %s.sdds,
-	SDDS_output_order   = 3,
-	printout            = %s.mat,
-	printout_order      = 3,
-	full_matrix_only    = 0,
-	individual_matrices = 1,
-	output_at_each_step = 1,
+&twiss_output
+	filename            = %s.twi,
+	matched             = 1,
+	radiation_integrals = 1,
+&end
+
+&insert_elements
+	name                = W,
+	s_start             = -1,
+	s_end               = -1,
+	skip                = 1,
+	insert_before       = 0,
+	add_at_end          = 0,
+	add_at_start        = 1,
+	element_def         = "W: WATCH, FILENAME=\"%s-%03ld.wq\", mode=\"coordinates\"",
 &end
 
 &run_control

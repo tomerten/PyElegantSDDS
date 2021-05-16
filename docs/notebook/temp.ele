@@ -10,16 +10,20 @@
 	magnets             = %s.mag,
 &end
 
+&matrix_output
+	SDDS_output         = %s.sdds,
+	SDDS_output_order   = 3,
+	printout            = %s.mat,
+	printout_order      = 3,
+	full_matrix_only    = 0,
+	individual_matrices = 1,
+	output_at_each_step = 1,
+&end
+
 &run_control
-	n_passes            = 100,
 &end
 
 &bunched_beam
-&end
-
-&sdds_beam
-	input               = temp_particles_input.bin,
-	input_type          = "elegant",
 &end
 
 &track
