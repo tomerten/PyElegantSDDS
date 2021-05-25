@@ -8,32 +8,49 @@
 	parameters          = %s.params,
 	semaphore_file      = %s.done,
 	magnets             = %s.mag,
+	final               = %s.fin,
+&end
+
+&insert_elements
+	name                = W,
+	s_start             = -1,
+	s_end               = -1,
+	skip                = 1,
+	insert_before       = 0,
+	add_at_end          = 0,
+	add_at_start        = 1,
+	element_def         = "W: WATCH, FILENAME=\"%s-%03ld.wq\", mode=\"coordinates\"",
 &end
 
 &run_control
+	n_indices           = 2,
 	n_passes            = 256,
 &end
 
-&twiss_output
-	filename            = %s.twi,
-	matched             = 1,
-	radiation_integrals = 1,
+&vary_element
+	name                = Q1,
+	item                = K1,
+	initial             = 1.776022448154,
+	final               = 1.796022448154,
+	index_number        = 0,
+	index_limit         = 2,
 &end
 
-&frequency_map
-	output              = %s.fma,
-	xmin                = -0.05,
-	xmax                = 0.05,
-	ymin                = 0,
-	ymax                = 0.02,
-	delta_min           = 0,
-	delta_max           = 0,
-	nx                  = 51,
-	ny                  = 51,
-	ndelta              = 1,
-	verbosity           = 0,
-	include_changes     = 1,
-	quadratic_spacing   = 0,
-	full_grid_output    = 1,
+&vary_element
+	name                = Q2,
+	item                = K1,
+	initial             = 2.285915530046,
+	final               = 2.3059155300459997,
+	index_number        = 1,
+	index_limit         = 2,
+&end
+
+&sdds_beam
+	input               = temp_particles_input.bin,
+	input_type          = "elegant",
+	reuse_bunch         = 1,
+&end
+
+&track
 &end
 

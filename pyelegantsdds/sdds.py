@@ -226,7 +226,7 @@ class SDDS:
         Parameters
         ----------
         command : str
-                                                                                                                                        valid sdds command
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        valid sdds command
         """
         sddscommand = SDDSCommand(self.sif)
         cmdstr = sddscommand.getCommand(command, **params)
@@ -312,8 +312,8 @@ class SDDS:
         Parameters
         ----------
         history_idx : int
-                index of history command to reload
-                use `printHistory()` to get an overview
+                                        index of history command to reload
+                                        use `printHistory()` to get an overview
         """
         self.clearCommandList(save=True)
         self.commandlist = self.command_history.get(history_idx)
@@ -509,7 +509,11 @@ class SDDS:
         )
 
         df = df.set_index("ParameterName", drop=True)
-        df = pd.to_numeric(df.drop(["SVNVersion", "Stage"], errors="ignore")["ParameterValue"])
+        df = pd.to_numeric(
+            df.drop(["SVNVersion", "Stage", "PreviousElementName"], errors="ignore")[
+                "ParameterValue"
+            ]
+        )
         self.ParameterName = df
         return df
 
@@ -519,8 +523,8 @@ class SDDS:
         Parameters
         ----------
         vary : bool, optional
-                adds a step column for distinguising between the
-                different vary_element steps.
+                                        adds a step column for distinguising between the
+                                        different vary_element steps.
         Returns
         -------
         DataFrame (pandas or dask)
@@ -668,18 +672,17 @@ class SDDS:
         order="spectral",
         **kwargs,
     ):
-        if file is not None:
-            newkwargs = {
-                "file": file,
-                "col": col,
-                "graph": graph,
-                "order": order,
-                "split": split,
-            }
-            newkwargs = {**newkwargs, **kwargs}
-            self.sddsplot_base(**newkwargs)
-        else:
-            print("File missing.")
+        newkwargs = {
+            "file": file,
+            "col": col,
+            "graph": graph,
+            "order": order,
+            "split": split,
+        }
+        if file is None:
+            newkwargs.pop("file")
+        newkwargs = {**newkwargs, **kwargs}
+        self.sddsplot_base(**newkwargs)
 
     def generate_scan_dataset(self, datasetdict):
         """

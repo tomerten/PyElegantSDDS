@@ -309,6 +309,7 @@ class ElegantRun:
             parameters="%s.params",
             semaphore_file="%s.done",
             magnets="%s.mag",  # for plotting profile
+            final="%s.fin",
         )
 
     def add_basic_twiss(self):
@@ -783,6 +784,7 @@ class ElegantRun:
         """
         self.commandfile.clear()
         self.add_basic_setup()
+
         self.commandfile.addCommand("run_control", n_passes=kwargs.pop("n_passes", 2 ** 8))
         self.add_basic_twiss()
         self.add_fma_command(**kwargs)
@@ -819,32 +821,37 @@ class ElegantRun:
         """
         Run Elegant's Dynamic Momentum Aperture.
         """
+        # TODO
         pass
 
-    def table_scan(self, scan_list_of_dicts, **kwargs):
+    def table_scan(self, scan_list_of_dicts, mode="row", add_watch_start=True, **kwargs):
         """ """
+        assert mode in ["row", "table"]
+        n_idx = 1 if mode == "row" else len(scan_list_of_dicts)
+        print(n_idx)
         self.commandfile.clear()
         self.add_basic_setup()
+        if add_watch_start:
+            self.add_watch_at_start()
         self.commandfile.addCommand(
-            "run_control",
-            n_passes=kwargs.get("n_passes", 2 ** 8),
-            n_indices=len(scan_list_of_dicts),
+            "run_control", n_indices=n_idx, n_passes=kwargs.get("n_passes", 2 ** 8)
         )
         for i, l in enumerate(scan_list_of_dicts):
+            if mode == "table":
+                inx = i
+            else:
+                inx = 0
             self.commandfile.addCommand(
                 "vary_element",
                 name=l.get("name"),
                 item=l.get("item"),
                 initial=l.get("initial"),
                 final=l.get("final"),
-                index_number=i,
+                index_number=inx,
                 index_limit=l.get("index_limit"),
             )
-
         self.commandfile.addCommand(
-            "sdds_beam",
-            input=self.sdds_beam_file,
-            input_type='"elegant"',
+            "sdds_beam", input=self.sdds_beam_file, input_type='"elegant"', reuse_bunch=1
         )
         self.commandfile.addCommand("track")
 
