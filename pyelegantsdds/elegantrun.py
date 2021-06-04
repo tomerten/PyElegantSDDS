@@ -373,7 +373,10 @@ class ElegantRun:
             add_at_end=kwargs.get("add_at_end", 0),
             add_at_start=kwargs.get("add_at_start", 0),
             element_def=kwargs.get(
-                "element_def", r'"WQ: WATCH, FILENAME=\"%s-%03ld.wq\", mode=\"coordinates\""'
+                "element_def",
+                r'"WQ: WATCH, FILENAME=\"%s-%03ld.wq\", mode=\"coordinates\", interval={}"'.format(
+                    kwargs.get("interval", 1)
+                ),
             ),
         )
 
@@ -384,6 +387,29 @@ class ElegantRun:
             add_at_start=1,
             element_def=r'"W: WATCH, FILENAME=\"%s-%03ld.wq\", mode=\"coordinates\""',
         )
+
+    def add_alter_elements(self, **kwargs):
+        self.commandfile.addCommand("alter_elements", **kwargs)
+
+    def add_rf(self, volt=350000):
+        self.add_basic_twiss()
+        self.commandfile.addCommand("rpn_load", filename=r"%s.twi", tag="ref", load_paramters=1)
+        self.add_alter_elements(name="*", type="RFCA", item="VOLT", value=volt)
+        self.add_alter_elements(
+            name="*", type="RFCA", item="phase", value="180 ref.U0 1e6 * VOLT 4 * / dasin -"
+        )
+
+    def add_radiation_damping(self):
+        self.add_alter_elements(name="*", type="CSBEND", item="USE_RAD_DIST", value=1)
+        self.add_alter_elements(name="*", type="KQUAD", item="ISR", value=1)
+        self.add_alter_elements(name="*", type="KQUAD", item="ISR1PART", value=1)
+        self.add_alter_elements(name="*", type="KSEXT", item="ISR", value=1)
+        self.add_alter_elements(name="*", type="KSEXT", item="ISR1PART", value=1)
+
+    def use_standard_nkicks(self):
+        self.add_alter_elements(name="*", type="CSBEND", item="N_KICKS", value=16)
+        self.add_alter_elements(name="*", type="KQUAD", item="N_KICKS", value=8)
+        self.add_alter_elements(name="*", type="KSEXT", item="N_KICKS", value=8)
 
     def add_fma_command(self, **kwargs):
         """
@@ -676,7 +702,7 @@ class ElegantRun:
 
         self.sdds_beam_file = kwargs["file_2"]
 
-    def simple_single_particle_track(self, coord=np.zeros((5, 1)), **kwargs):
+    def simple_single_particle_track(self, coord=np.zeros((5, 1)), rf=False, rad=False, **kwargs):
         """
         Track a single particle with given initial coordinates.
 
@@ -695,6 +721,13 @@ class ElegantRun:
         # construct command file
         self.commandfile.clear()
         self.add_basic_setup()
+
+        if rf:
+            self.add_rf(volt=kwargs.get("volt", 350000))
+
+        if rad:
+            self.add_radiation_damping()
+
         self.commandfile.addCommand("run_control", n_passes=kwargs.get("n_passes", 2 ** 8))
         self.commandfile.addCommand("bunched_beam")
         self.commandfile.addCommand(
@@ -714,6 +747,13 @@ class ElegantRun:
         # construct command file
         self.commandfile.clear()
         self.add_basic_setup()
+        if kwargs.get("add_watch_start", False):
+            self.add_watch_at_start()
+        if kwargs.get("rf", False):
+            self.add_rf(volt=kwargs.get("volt", 350000))
+
+        if kwargs.get("rad", False):
+            self.add_radiation_damping()
         self.commandfile.addCommand("run_control", n_passes=kwargs.get("n_passes", 2 ** 8))
         self.commandfile.addCommand("bunched_beam")
         self.commandfile.addCommand(
@@ -743,6 +783,13 @@ class ElegantRun:
 
         self.commandfile.clear()
         self.add_basic_setup()
+
+        if kwargs.get("rf", False):
+            self.add_rf(volt=kwargs.get("volt", 350000))
+
+        if kwargs.get("rad", False):
+            self.add_radiation_damping()
+
         if add_watch_start:
             self.add_watch_at_start()
         n_idx = 1 if mode == "row" else len(varydict)
@@ -831,6 +878,14 @@ class ElegantRun:
         print(n_idx)
         self.commandfile.clear()
         self.add_basic_setup()
+        self.use_standard_nkicks()
+
+        if kwargs.get("rf", False):
+            self.add_rf(volt=kwargs.get("volt", 350000))
+
+        if kwargs.get("rad", False):
+            self.add_radiation_damping()
+
         if add_watch_start:
             self.add_watch_at_start()
         self.commandfile.addCommand(

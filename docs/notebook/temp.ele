@@ -23,32 +23,15 @@
 &end
 
 &run_control
-	n_indices           = 2,
 	n_passes            = 256,
 &end
 
-&vary_element
-	name                = Q1,
-	item                = K1,
-	initial             = 1.776022448154,
-	final               = 1.796022448154,
-	index_number        = 0,
-	index_limit         = 2,
-&end
-
-&vary_element
-	name                = Q2,
-	item                = K1,
-	initial             = 2.285915530046,
-	final               = 2.3059155300459997,
-	index_number        = 1,
-	index_limit         = 2,
+&bunched_beam
 &end
 
 &sdds_beam
 	input               = temp_particles_input.bin,
 	input_type          = "elegant",
-	reuse_bunch         = 1,
 &end
 
 &track
