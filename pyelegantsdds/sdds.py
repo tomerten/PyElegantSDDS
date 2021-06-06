@@ -226,7 +226,7 @@ class SDDS:
         Parameters
         ----------
         command : str
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        valid sdds command
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        valid sdds command
         """
         sddscommand = SDDSCommand(self.sif)
         cmdstr = sddscommand.getCommand(command, **params)
@@ -312,8 +312,8 @@ class SDDS:
         Parameters
         ----------
         history_idx : int
-                                        index of history command to reload
-                                        use `printHistory()` to get an overview
+                                                                        index of history command to reload
+                                                                        use `printHistory()` to get an overview
         """
         self.clearCommandList(save=True)
         self.commandlist = self.command_history.get(history_idx)
@@ -517,14 +517,14 @@ class SDDS:
         self.ParameterName = df
         return df
 
-    def readParticleData(self, vary=False):
+    def readParticleData(self, vary=False, long=False):
         """Read the particle tracking data.
 
         Parameters
         ----------
         vary : bool, optional
-                                        adds a step column for distinguising between the
-                                        different vary_element steps.
+                                                                        adds a step column for distinguising between the
+                                                                        different vary_element steps.
         Returns
         -------
         DataFrame (pandas or dask)
@@ -533,6 +533,30 @@ class SDDS:
         # convert data and add step column
         if vary:
             self.process_scan()
+
+        if long:
+            self.addCommand(
+                "sddsprocess",
+                define='column,delta,"p pCentral / 1 - " {}'.format(self.filename),
+                outfile="{}_longitudinal.{}".format(
+                    self.filename.split(".")[0], self.filename.split(".")[1]
+                ),
+            )
+
+            # run command
+            self.runCommand()
+
+            # cmdstr = "{} sddsprocess -define=column,step,Step {} {}_processed.{}".format(
+            #    self.sif, self.filename, *self.filename.split(".")
+            # )
+            # print(cmdstr)
+            # p = subp.Popen(cmdstr, stdout=subp.PIPE, shell=True)
+            newfilename = "{}_longitudinal.{}".format(*self.filename.split("."))
+            print("Warning - auto filename set")
+            print("Changed from {} to {}".format(self.filename, newfilename))
+
+            # update the filename
+            self.filename = newfilename
 
         self.getColumnList()
 

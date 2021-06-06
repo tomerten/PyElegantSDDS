@@ -1,9 +1,9 @@
 &run_setup
-	lattice             = parTrack.lte,
-	use_beamline        = par,
-	p_central_mev       = 880.0,
-	default_order       = 1,
-	concat_order        = 3,
+	lattice             = bii_simple.lte,
+	use_beamline        = ring,
+	p_central_mev       = 1700.0,
+	default_order       = 2,
+	concat_order        = 1,
 	rootname            = temp,
 	parameters          = %s.params,
 	semaphore_file      = %s.done,
@@ -20,6 +20,74 @@
 	add_at_end          = 0,
 	add_at_start        = 1,
 	element_def         = "W: WATCH, FILENAME=\"%s-%03ld.wq\", mode=\"coordinates\"",
+&end
+
+&alter_elements
+	name                = *,
+	type                = CSBEND,
+	item                = SYNCH_RAD,
+	value               = 1,
+&end
+
+&alter_elements
+	name                = *,
+	type                = CSBEND,
+	item                = USE_RAD_DIST,
+	value               = 1,
+&end
+
+&alter_elements
+	name                = *,
+	type                = KQUAD,
+	item                = SYNCH_RAD,
+	value               = 1,
+&end
+
+&alter_elements
+	name                = *,
+	type                = KQUAD,
+	item                = ISR,
+	value               = 1,
+&end
+
+&alter_elements
+	name                = *,
+	type                = KQUAD,
+	item                = ISR1PART,
+	value               = 1,
+&end
+
+&alter_elements
+	name                = *,
+	type                = KSEXT,
+	item                = SYNCH_RAD,
+	value               = 1,
+&end
+
+&alter_elements
+	name                = *,
+	type                = KSEXT,
+	item                = ISR,
+	value               = 1,
+&end
+
+&alter_elements
+	name                = *,
+	type                = KSEXT,
+	item                = ISR1PART,
+	value               = 1,
+&end
+
+&twiss_output
+	filename            = %s.twi,
+	matched             = 1,
+	radiation_integrals = 1,
+&end
+
+&rf_setup
+	filename            = %s.rf,
+	harmonic            = 400,
+	total_voltage       = 1500000.0,
 &end
 
 &run_control

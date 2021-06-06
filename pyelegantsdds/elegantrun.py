@@ -300,11 +300,11 @@ class ElegantRun:
         self.commandfile.addCommand(
             "run_setup",
             lattice=self.lattice,
-            use_beamline=self.kwargs.get("use_beamline", None),
-            p_central_mev=self.kwargs.get("energy", 1700.00),
+            use_beamline=self.kwargs.pop("use_beamline", None),
+            p_central_mev=self.kwargs.pop("energy", 1700.00),
             # centroid="%s.cen",
-            default_order=kwargs.get("default_order", 1),
-            concat_order=kwargs.get("concat_order", 3),
+            default_order=kwargs.pop("default_order", 2),
+            concat_order=kwargs.pop("concat_order", 1),
             rootname="temp",
             parameters="%s.params",
             semaphore_file="%s.done",
@@ -389,20 +389,67 @@ class ElegantRun:
         )
 
     def add_alter_elements(self, **kwargs):
+        """Add alter_element command."""
         self.commandfile.addCommand("alter_elements", **kwargs)
 
-    def add_rf(self, volt=350000):
-        self.add_basic_twiss()
-        self.commandfile.addCommand("rpn_load", filename=r"%s.twi", tag="ref", load_paramters=1)
-        self.add_alter_elements(name="*", type="RFCA", item="VOLT", value=volt)
-        self.add_alter_elements(
-            name="*", type="RFCA", item="phase", value="180 ref.U0 1e6 * VOLT 4 * / dasin -"
+    def add_rf_setup(self, **kwargs):
+        """Add rf_setup command."""
+        self.commandfile.addCommand(
+            "rf_setup",
+            filename="%s.rf",
+            harmonic=kwargs.get("harmonic", 400),
+            total_voltage=kwargs.get("total_voltage", 1.5e6),
         )
 
+    def add_rf_get_freq_and_phase(
+        self, total_voltage: float = 4 * 375e3, harmonic: int = 400, rad: bool = False, **kwargs
+    ):
+        """Add simulation single turn to get synchronuous freq and phase to be used in next simulation.
+        Produces temp.twi and temp.out that can be used with tags.
+        Parameters
+        ----------
+        total_voltage : float, optional
+            Total sum of RF voltages, by default 4*375e3
+        harmonic : int, optional
+            harmonic number, by default 400
+        rad : bool, optional
+            radiation flag, by default False
+        """
+
+        self.commandfile.addCommand(
+            "run_setup",
+            lattice=self.lattice,
+            use_beamline=self.kwargs.pop("use_beamline", None),
+            p_central_mev=self.kwargs.pop("energy", 1700.00),
+            # centroid="%s.cen",
+            default_order=kwargs.pop("default_order", 1),
+            concat_order=kwargs.pop("concat_order", 1),
+            rootname="temp",
+            parameters="%s.params",
+            semaphore_file="%s.done",
+            magnets="%s.mag",  # for plotting profile
+            final="%s.fin",
+            output="%s.out",
+        )
+        if rad:
+            self.add_radiation_damping()
+
+        self.add_basic_twiss()
+        self.commandfile.addCommand(
+            "rf_setup", total_voltage=total_voltage, harmonic=harmonic, track_for_frequency=1
+        )
+        self.add_basic_controls()
+        self.run()
+
     def add_radiation_damping(self):
+        """Add radiation damping for CSBEND, KQUAD and KSEXT."""
+
+        self.add_alter_elements(name="*", type="CSBEND", item="SYNCH_RAD", value=1)
         self.add_alter_elements(name="*", type="CSBEND", item="USE_RAD_DIST", value=1)
+        self.add_alter_elements(name="*", type="KQUAD", item="SYNCH_RAD", value=1)
         self.add_alter_elements(name="*", type="KQUAD", item="ISR", value=1)
         self.add_alter_elements(name="*", type="KQUAD", item="ISR1PART", value=1)
+        self.add_alter_elements(name="*", type="KSEXT", item="SYNCH_RAD", value=1)
         self.add_alter_elements(name="*", type="KSEXT", item="ISR", value=1)
         self.add_alter_elements(name="*", type="KSEXT", item="ISR1PART", value=1)
 
@@ -749,11 +796,46 @@ class ElegantRun:
         self.add_basic_setup()
         if kwargs.get("add_watch_start", False):
             self.add_watch_at_start()
-        if kwargs.get("rf", False):
-            self.add_rf(volt=kwargs.get("volt", 350000))
 
         if kwargs.get("rad", False):
             self.add_radiation_damping()
+
+        if kwargs.get("rf", False):
+            self.add_basic_twiss()
+            #            # get frequency
+            #            self.commandfile.addCommand("rpn_load", filename="%s.out", tag="ref", use_row=0)
+            #
+            #            # get energy loss
+            #            self.add_basic_twiss()
+            #            self.commandfile.addCommand(
+            #                "rpn_load", filename="%s.twi", tag="reftwi", load_parameters=1
+            #            )
+            #
+            #            # update RF settings
+            #            self.add_alter_elements(
+            #                name="*", type="RFCA", item="VOLT", value=kwargs.get("total_voltage") / 4.0
+            #            )
+            #            self.add_alter_elements(
+            #                name="*", type="RFCA", item="FREQ", value='("ref.t rec 400 * ")'
+            #            )
+            #            self.add_alter_elements(
+            #                name="*",
+            #                type="RFCA",
+            #                item="PHASE",
+            #                value='("180 reftwi.U0 1e6 * {} / dasin -")'.format(kwargs.get("total_voltage")),
+            #            )
+            #
+            #            self.add_alter_elements(
+            #                name="*",
+            #                type="RFCA",
+            #                item="PHASE",
+            #                value='("180")'.format(kwargs.get("total_voltage")),
+            #            )
+            #
+            self.add_rf_setup(
+                filename="%s.rf", harmonic=400, total_voltage=kwargs.get("total_voltage")
+            )
+
         self.commandfile.addCommand("run_control", n_passes=kwargs.get("n_passes", 2 ** 8))
         self.commandfile.addCommand("bunched_beam")
         self.commandfile.addCommand(
@@ -761,6 +843,7 @@ class ElegantRun:
             input=self.sdds_beam_file,
             input_type='"elegant"',
         )
+
         self.commandfile.addCommand("track")
 
         # run will write command file and execute it
