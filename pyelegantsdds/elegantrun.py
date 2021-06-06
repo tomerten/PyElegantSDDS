@@ -91,11 +91,11 @@ def GenerateNDimCoordinateGrid(N, NPOINTS, pmin=1e-6, pmax=1e-4, man_ranges=None
     The final shape is printed at creation.
 
     IMPORTANT:
-                                                                                                                                    Number of grid points scales with N * NPOINTS**N, i.e.
-                                                                                                                                    very large arrays are generated already with
-                                                                                                                                    quite some small numbers for NPOINTS and N.
+    Number of grid points scales with N * NPOINTS**N, i.e.
+    very large arrays are generated already with
+    quite some small numbers for NPOINTS and N.
 
-                                                                                                                                    Example: NPOINTS = 2, N = 6 -> 6*2*6 = 384 elements
+    Example: NPOINTS = 2, N = 6 -> 6*2*6 = 384 elements
 
     Parameters:
     -----------
@@ -300,11 +300,11 @@ class ElegantRun:
         self.commandfile.addCommand(
             "run_setup",
             lattice=self.lattice,
-            use_beamline=self.kwargs.pop("use_beamline", None),
-            p_central_mev=self.kwargs.pop("energy", 1700.00),
+            use_beamline=self.kwargs.get("use_beamline", None),
+            p_central_mev=self.kwargs.get("energy", 1700.00),
             # centroid="%s.cen",
-            default_order=kwargs.pop("default_order", 2),
-            concat_order=kwargs.pop("concat_order", 1),
+            default_order=kwargs.get("default_order", 2),
+            concat_order=kwargs.get("concat_order", 1),
             rootname="temp",
             parameters="%s.params",
             semaphore_file="%s.done",
@@ -668,6 +668,7 @@ class ElegantRun:
         """
         assert grid_type in ["rectangular", "spherical"]
         pcentral = kwargs.get("pcentralmev", self.kwargs.get("energy"))
+        print(pcentral)
         # convert to beta * gamma
         pcentral = np.sqrt(
             (pcentral / const.physical_constants["electron mass energy equivalent in MeV"][0]) ** 2
@@ -749,7 +750,7 @@ class ElegantRun:
 
         self.sdds_beam_file = kwargs["file_2"]
 
-    def simple_single_particle_track(self, coord=np.zeros((5, 1)), rf=False, rad=False, **kwargs):
+    def simple_single_particle_track(self, coord=np.zeros((5, 1)), **kwargs):
         """
         Track a single particle with given initial coordinates.
 
@@ -768,12 +769,6 @@ class ElegantRun:
         # construct command file
         self.commandfile.clear()
         self.add_basic_setup()
-
-        if rf:
-            self.add_rf(volt=kwargs.get("volt", 350000))
-
-        if rad:
-            self.add_radiation_damping()
 
         self.commandfile.addCommand("run_control", n_passes=kwargs.get("n_passes", 2 ** 8))
         self.commandfile.addCommand("bunched_beam")
@@ -958,16 +953,8 @@ class ElegantRun:
         """ """
         assert mode in ["row", "table"]
         n_idx = 1 if mode == "row" else len(scan_list_of_dicts)
-        print(n_idx)
         self.commandfile.clear()
         self.add_basic_setup()
-        self.use_standard_nkicks()
-
-        if kwargs.get("rf", False):
-            self.add_rf(volt=kwargs.get("volt", 350000))
-
-        if kwargs.get("rad", False):
-            self.add_radiation_damping()
 
         if add_watch_start:
             self.add_watch_at_start()
